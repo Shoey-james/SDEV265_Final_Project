@@ -65,13 +65,17 @@ class CreateAccount(QWidget):
         self.username_input = QLineEdit(self)
         self.username_input.setPlaceholderText("Email Address")
         self.username_input.setGeometry(220, 440, 360, 40)
+        
+        self.username_input = QLineEdit(self)
+        self.username_input.setPlaceholderText("Phone Number")
+        self.username_input.setGeometry(220, 500, 360, 40)
 
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
         create_btn.setFont(button_font)
         create_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
         create_btn.clicked.connect(CreateAccount)
-        create_btn.setGeometry(220, 500, 360, 40)
+        create_btn.setGeometry(220, 560, 360, 40)
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
