@@ -63,7 +63,7 @@ class PortionCalcWindow(QWidget):
         print("searching ")
         # TODO: search button logic
 """
-def center_window(self, width, height):
+    def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
         x = (screen.width() - width) // 2
         y = (screen.height() - height) // 2
