@@ -1,18 +1,11 @@
-import sys
-import CreateAccount
+
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton, QTableWidget, QVBoxLayout, QGridLayout
+     QWidget, QLabel
 )
-from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
 
-def MainWindow():
-    print("Main window opened")
-
-
-
-class MainWindow(QWidget):
+class MyFavoritesWindow():
     def __init__(self):
         super().__init__()
 
@@ -48,14 +41,15 @@ class MainWindow(QWidget):
         subtitle.setStyleSheet(f"color: {color_font}; background-color: white;")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitle.setGeometry(200, 140, 400, 30)
-
+        
+        # TODO: change button to 
+"""
         # Search Button
         login_btn = QPushButton("Search", self)
         login_btn.setFont(button_font)
         login_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
         login_btn.clicked.connect(self.search)
-        login_btn.setGeometry(300, 200, 100, 30)  # position, button size
-        
+        login_btn.setGeometry(300, 200, 100, 30)  # position, button size        
         # table
         # TODO: add table next to search button
         
@@ -63,19 +57,11 @@ class MainWindow(QWidget):
         print("searching ")
         # TODO: search button logic
 
+
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
         x = (screen.width() - width) // 2
         y = (screen.height() - height) // 2
         self.move(x, y)
+"""
 
-
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()

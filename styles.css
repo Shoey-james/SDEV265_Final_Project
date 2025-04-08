@@ -1,0 +1,63 @@
+/* General Styling Template */
+
+/* General QWidget Styling*/
+QWidget {
+    background-color: #ea8e0e;
+    color: #000000;
+    font-family: "Helvetica", sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+QLabel {
+    color:#000000;
+    font-family: "Helvetica", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QLineEdit {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 18px;
+    
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #f0d907;
+    color: #000000;
+    border: 2px solid #3b3b3b;
+    font-family: "Helvetica", sans-serif;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+/* Button Effects */
+QPushButton:hover {
+    background-color: #e3be06;
+    border: 2px solid #202020;
+}
+
+QPushButton:pressed {
+    background-color: #ffee53;
+    border: 2px solid #383737;
+}
+
+QPushButton:focus {
+    outline: none;
+    border: 2px solid #202020;
+}
+
+/* Containers */
+#searchContainer {
+    background-color: #313131;
+    border-radius: 8px;
+    padding: 10px;
+}
+#favoritesContainer {
+    background-color: #313131;
+    border-radius: 8px;
+    padding: 10px;
+}

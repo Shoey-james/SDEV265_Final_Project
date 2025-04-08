@@ -1,5 +1,5 @@
-import sys
-import Login
+
+import view.LoginDisplay as LoginDisplay
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
 )
@@ -7,7 +7,7 @@ from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
 
-class CreateAccount(QWidget):
+class CreateAccountDisplay():
     def __init__(self):
         super().__init__()
 
@@ -15,32 +15,13 @@ class CreateAccount(QWidget):
         self.resize(800, 800)
         self.center_window(800, 800)
 
-        self.setAutoFillBackground(True)
-        palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor("white"))
-        self.setPalette(palette)
-
-        # Fonts
-        top_font = QFont("Helvetica", 35, QFont.Weight.Bold)
-        sub_label_font = QFont("Helvetica", 16)
-        button_font = QFont("Helvetica", 12, QFont.Weight.Bold)
-
-        # Colors
-        color_font = "Black"
-        button_bg = "Beige"
-        button_fg = "Black"
-
         # Title Label
         title = QLabel("RecipeSave", self)
-        title.setFont(top_font)
-        title.setStyleSheet(f"color: {color_font}; background-color: beige;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setGeometry(200, 70, 400, 50)
 
         # Subtitle Label
         subtitle = QLabel("Fill in the fields to create an account", self)
-        subtitle.setFont(sub_label_font)
-        subtitle.setStyleSheet(f"color: {color_font}; background-color: white;")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitle.setGeometry(200, 140, 400, 30)
 
@@ -72,9 +53,7 @@ class CreateAccount(QWidget):
 
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
-        create_btn.setFont(button_font)
-        create_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
-        create_btn.clicked.connect(CreateAccount)
+        create_btn.clicked.connect()
         create_btn.setGeometry(220, 560, 360, 40)
 
     def center_window(self, width, height):
@@ -84,13 +63,4 @@ class CreateAccount(QWidget):
         self.move(x, y)
 
 
-def main():
-    app = QApplication(sys.argv)
-    window = CreateAccount()
-    window.show()
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
 
