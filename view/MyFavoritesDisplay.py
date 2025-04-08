@@ -1,6 +1,6 @@
 
 from PyQt6.QtWidgets import (
-     QWidget, QLabel
+    QWidget, QLabel
 )
 from PyQt6.QtCore import Qt
 
