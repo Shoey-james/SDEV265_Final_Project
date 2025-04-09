@@ -13,32 +13,13 @@ class MyFavoritesWindow():
         self.resize(800, 800)
         self.center_window(800, 800)
 
-        self.setAutoFillBackground(True)
-        palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor("white"))
-        self.setPalette(palette)
-
-        # Fonts
-        top_font = QFont("Helvetica", 35, QFont.Weight.Bold)
-        sub_label_font = QFont("Helvetica", 16)
-        button_font = QFont("Helvetica", 12, QFont.Weight.Bold)
-
-        # Colors
-        color_font = "Black"
-        button_bg = "Beige"
-        button_fg = "Black"
-
         # Title Label
         title = QLabel("RecipeSave", self)
-        title.setFont(top_font)
-        title.setStyleSheet(f"color: {color_font}; background-color: beige;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setGeometry(200, 70, 400, 50)
 
         # Subtitle Label
         subtitle = QLabel("Welcome!", self)
-        subtitle.setFont(sub_label_font)
-        subtitle.setStyleSheet(f"color: {color_font}; background-color: white;")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitle.setGeometry(200, 140, 400, 30)
         
