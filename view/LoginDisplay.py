@@ -1,14 +1,14 @@
 
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
+    QApplication,QMainWindow, QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
 )
 from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
-class LoginWindow():
-    def __init__(self):
+class LoginWindow(QMainWindow):
+    def __init__(self, controller):
         super().__init__()
-
+        self.controller = controller
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)
@@ -63,7 +63,7 @@ class LoginWindow():
         create_btn = QPushButton("Create an Account", self)
         create_btn.setFont(button_font)
         create_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
-        create_btn.clicked.connect(CreateAccountWindow)
+        create_btn.clicked.connect(self.controller.create_account)
         create_btn.setGeometry(220, 380, 360, 40)
 
     def login_user(self):

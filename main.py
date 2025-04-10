@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication
-import view.MainWindow as mw  
+import view.LoginDisplay as ld
 import controller.controller as ctr  
 
 def load_stylesheet(app):
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     load_stylesheet(app)  # Apply styles
 
     controller = ctr.Controller()  # Initialize the controller
-    window = mw.MainWindow(controller)  # Create the main window
+    window = ld.LoginWindow(controller)  # Create the login window
     window.show()  # Show the main window
     
     sys.exit(app.exec())  # Start the event loop

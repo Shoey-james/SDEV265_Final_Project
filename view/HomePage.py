@@ -1,12 +1,12 @@
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout
+    QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 
 
 
-class MainWindow(QMainWindow):
+class HomePage():
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
