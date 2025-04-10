@@ -1,17 +1,8 @@
+# login_logic.py
 import sqlite3
 from PyQt6.QtWidgets import QMessageBox
 
-class Controller:
-
-    def search(self):
-        print("searching ")
-        # TODO: search button logic
-
-    def create_account(self):
-        print("Opening Registration Form")
-        # TODO: open the RegistrationForm window by initiating the class/method here.
-        # TODO cont: logic for registration form in RegistrationForm class
-
+class LoginLogic:
     def validate_login(self):
         username = self.username_input.text()
         password = self.password_input.text()
@@ -24,6 +15,7 @@ class Controller:
             # Trigger controller method or move to next window if needed
         else:
             QMessageBox.critical(self, "Login Failed", "Invalid username or password.")
+
     def check_credentials(self, username, password):
         try:
             conn = sqlite3.connect('user.db')
@@ -40,3 +32,4 @@ class Controller:
         except sqlite3.Error as e:
             QMessageBox.critical(self, "Database Error", f"An error occurred: {e}")
             return None
+

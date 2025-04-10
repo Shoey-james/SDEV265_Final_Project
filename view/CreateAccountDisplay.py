@@ -1,5 +1,5 @@
 
-import view.LoginDisplay as LoginDisplay
+import view.LoginWindow as LoginWindow
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
 )

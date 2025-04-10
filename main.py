@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication
-import view.LoginDisplay as ld
+import view.LoginWindow as ld
 import controller.controller as ctr  
 
 def load_stylesheet(app):
