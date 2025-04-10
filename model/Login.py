@@ -1,4 +1,5 @@
 # login logic
+# TODO: finish changing this to reflect the database tables in this project
 """ import sqlite3
 from PyQt6.QtWidgets import QMessageBox
 
@@ -34,7 +35,7 @@ def check_credentials(self, username, password):
 
         # Check user login
         cursor.execute(
-            "SELECT p_id, p_first_name, p_last_name FROM patient_users WHERE p_username=? AND p_password=?",
+            "SELECT  FROM patient_users WHERE p_username=? AND p_password=?",
             (username, password)
         )
         result = cursor.fetchone()
