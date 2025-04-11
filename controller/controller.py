@@ -29,15 +29,15 @@ class Controller:
         print("Login button pressed.")
         username = username_input.text()
         password = password_input.text()
-        LoginLogic.validate_login(self, username, password)
+        LoginLogic.validate_login(self, username, password) # pass controller as self 
 
     def login_successful(self, username):
         self.username = username
         print(f"Controller has received {self.username} as active. Opening Home Page.")
         fname = self.get_fname(self.username)
-        self. home = HomePage(self, fname)
-        self.home.show()
-        self.window.close()
+        self.home = HomePage(self, fname) # pass the controller as "self" and the first name
+        self.home.show() # .show opens "HomePage"
+        self.window.close() # this will close login page. "window" is LoginWindow class defined in controller.py
         
     def get_fname(self, username):
         try:

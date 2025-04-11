@@ -15,8 +15,7 @@ class HomePage(QMainWindow):
         self.resize(800, 800)
         self.center_window(800, 800)
 
-        
-
+    
         # Home Page
         self.home_page = QWidget()
         layout = QVBoxLayout()
@@ -85,6 +84,9 @@ class HomePage(QMainWindow):
         # table
         # TODO: add table next to search button
         # Note- Look up QListWidget, you might like it better than a table to contain the favorites list
+        
+        #self.close or something similar for sign out button JS 
+        #self.window.show to reopen login page
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()

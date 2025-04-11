@@ -61,7 +61,7 @@ class LoginWindow(QMainWindow):  # Inherit logic
         create_btn = QPushButton("Create an Account", self)
         #create_btn.setFont(button_font)
         #create_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
-        create_btn.clicked.connect(self.controller.create_account)
+        create_btn.clicked.connect(self.controller.create_account) # lambda not needed since no variables being sent through, unlike the login button 
         create_btn.setGeometry(220, 380, 360, 40)
 
     def center_window(self, width, height):
