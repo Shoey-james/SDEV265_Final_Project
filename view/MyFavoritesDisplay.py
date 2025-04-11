@@ -6,9 +6,9 @@ from PyQt6.QtCore import Qt
 
 
 class MyFavoritesWindow():
-    def __init__(self):
+    def __init__(self, controller):
         super().__init__()
-
+        self.controller = controller
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)

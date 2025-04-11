@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
     controller = ctr.Controller()  # Initialize the controller
     window = ld.LoginWindow(controller)  # Create the login window
+    controller.window = window
     window.show()  # Show the main window
     
     sys.exit(app.exec())  # Start the event loop

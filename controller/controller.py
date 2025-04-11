@@ -1,5 +1,8 @@
+from model.LoginLogic import LoginLogic, CreateAccount
+from view.HomePage import HomePage
+from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
-from PyQt6.QtWidgets import QMessageBox
+
 
 class Controller:
 
@@ -9,34 +12,46 @@ class Controller:
 
     def create_account(self):
         print("Opening Registration Form")
-        # TODO: open the RegistrationForm window by initiating the class/method here.
-        # TODO cont: logic for registration form in RegistrationForm class
+        self.reg_page = CreateAccountDisplay(self)
+        self.reg_page.show()
 
-    def validate_login(self):
-        username = self.username_input.text()
-        password = self.password_input.text()
+    def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input, phone_input):
+        print("Registration form submit button pressed")
+        username = username_input.text()
+        password = password_input.text()
+        fname = fname_input.text()
+        lname = lname_input.text()
+        email = email_input.text()
+        phone = phone_input.text()
+        CreateAccount.validate_new_user(username, password, fname, lname, email, phone)
 
-        user_info = self.check_credentials(username, password)
+    def login_pressed(self, username_input, password_input):
+        print("Login button pressed.")
+        username = username_input.text()
+        password = password_input.text()
+        LoginLogic.validate_login(self, username, password)
 
-        if user_info:
-            username, password = user_info
-            print(f"Login successful! Welcome {username}")
-            # Trigger controller method or move to next window if needed
-        else:
-            QMessageBox.critical(self, "Login Failed", "Invalid username or password.")
-    def check_credentials(self, username, password):
+    def login_successful(self, username):
+        self.username = username
+        print(f"Controller has received {self.username} as active. Opening Home Page.")
+        fname = self.get_fname(self.username)
+        self. home = HomePage(self, fname)
+        self.home.show()
+        self.window.close()
+        
+    def get_fname(self, username):
         try:
-            conn = sqlite3.connect('user.db')
+            conn = sqlite3.connect('db_tables/user.db')
             cursor = conn.cursor()
 
             cursor.execute(
-                "SELECT username, password FROM user_table WHERE username=? AND password=?",
-                (username, password)
+                "SELECT fname FROM user_table WHERE username=?",
+                (username,)
             )
             result = cursor.fetchone()
             conn.close()
             return result if result else None
 
         except sqlite3.Error as e:
-            QMessageBox.critical(self, "Database Error", f"An error occurred: {e}")
+            print("Database Error", f"An error occurred: {e}")
             return None

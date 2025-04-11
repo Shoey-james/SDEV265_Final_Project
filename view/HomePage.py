@@ -1,20 +1,21 @@
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout
+    QMainWindow, QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 
 
 
-class HomePage():
-    def __init__(self, controller):
+class HomePage(QMainWindow):
+    def __init__(self, controller, fname):
         super().__init__()
         self.controller = controller
+        self.current_user = fname
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)
 
-        #self.setAutoFillBackground(True)
+        
 
         # Home Page
         self.home_page = QWidget()
@@ -25,14 +26,15 @@ class HomePage():
 
 
         # Title Label
-        self.title = QLabel("RecipeSave", self)
+        self.title = QLabel("Welcome", self)
+        self.title.setObjectName("title")
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        #self.title.setGeometry(200, 70, 400, 50)
 
+        
         # Subtitle Label
-        self.subtitle = QLabel("Welcome!", self)
+        self.subtitle = QLabel(f"   {self.current_user[0]}!", self)
+        self.subtitle.setObjectName("name")
         self.subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        #self.subtitle.setGeometry(200, 140, 400, 30)
 
         # Containers
         """ Logo """
@@ -89,4 +91,3 @@ class HomePage():
         x = (screen.width() - width) // 2
         y = (screen.height() - height) // 2
         self.move(x, y)
-
