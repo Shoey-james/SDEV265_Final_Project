@@ -15,7 +15,7 @@ class Controller:
         self.reg_page = CreateAccountDisplay(self)
         self.reg_page.show()
 
-    def reg_submit_clicked(self, username, password, fname, lname, email, phone):
+    def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input, phone_input):
         print("Registration form submit button pressed")
         # Assuming this code goes into a method of your PyQt app:
 
