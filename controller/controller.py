@@ -15,22 +15,22 @@ class Controller:
         self.reg_page = CreateAccountDisplay(self)
         self.reg_page.show()
 
-    def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input, phone_input):
+    def reg_submit_clicked(self, username, password, fname, lname, email, phone):
         print("Registration form submit button pressed")
         # Assuming this code goes into a method of your PyQt app:
 
         # These are the inputs you want to validate
-        username = self.username_input.text()
-        password = self.password_input.text()
-        fname = self.fname_input.text()
-        lname = self.lname_input.text()
-        email = self.email_input.text()
-        phone = self.phone_input.text()
+        self.username = username_input.text()
+        self.password = password_input.text()
+        self.fname = fname_input.text()
+        self.lname = lname_input.text()
+        self.email = email_input.text()
+        self.phone = phone_input.text()
 
         # Validate input
         if CreateAccount.validate_input(username, password, fname, lname, email, phone):
             # If validation is successful, create the account
-            CreateAccount.create_acc()
+            CreateAccount.create_acc(username, password, fname, lname, email, phone)
         # TODO: I have to fix create account logic in LoginLogic.py
             
             

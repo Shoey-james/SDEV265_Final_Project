@@ -40,6 +40,7 @@ class CreateAccount:
         Validates the user input: username, password, first name, last name, email, phone number, and counselor's ID.
         Returns: True if all inputs are valid, False otherwise.
         """
+        print("validate_input initiated")
         if not all([username, password, fname, lname, email]):
             self.show_error("All fields are required!")
             return False
@@ -99,17 +100,18 @@ class CreateAccount:
         
         return True
 
-    def create_acc(self):
+    def create_acc(self, username, password, fname, lname, email, phone):
         """
         Collects user input, validates the data, and inserts a new patient record into the database.
         Ensures proper error handling to prevent database integrity issues.
         """
-        username = self.username_input.text()
-        password = self.password_input.text()
-        fname = self.fname_input.text()
-        lname = self.lname_input.text()
-        email = self.email_input.text()
-        phone = self.phone_input.text()
+        print("create_acc")
+        self.username = username
+        self.password = password
+        self.fname = fname
+        self.lname = lname
+        self.email = email
+        self.phone = phone
 
         # Validate the input fields and create the account if valid
         if not self.validate_input(username, password, fname, lname, email, phone):
@@ -120,7 +122,7 @@ class CreateAccount:
             cursor = conn.cursor()
             # Insert the new patient record into the patient_users table
             cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email, phone)
-                            VALUES (?, ?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
+                            VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
             conn.commit()
             conn.close()
             self.show_info("Account created successfully!")
