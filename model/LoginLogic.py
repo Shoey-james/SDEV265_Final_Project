@@ -104,12 +104,12 @@ class CreateAccount:
         Collects user input, validates the data, and inserts a new patient record into the database.
         Ensures proper error handling to prevent database integrity issues.
         """
-        username = self.username.text()
-        password = self.password.text()
-        fname = self.fname.text()
-        lname = self.lname.text()
-        email = self.email.text()
-        phone = self.phone.text()
+        username = self.username_input.text()
+        password = self.password_input.text()
+        fname = self.fname_input.text()
+        lname = self.lname_input.text()
+        email = self.email_input.text()
+        phone = self.phone_input.text()
 
         # Validate the input fields and create the account if valid
         if not self.validate_input(username, password, fname, lname, email, phone):
@@ -120,13 +120,13 @@ class CreateAccount:
             cursor = conn.cursor()
             # Insert the new patient record into the patient_users table
             cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email, phone)
-                            VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
+                            VALUES (?, ?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
             conn.commit()
             conn.close()
             self.show_info("Account created successfully!")
         except (sqlite3.IntegrityError, sqlite3.Error) as e:
             self.show_error(f"An error occurred: {e}")
-# TODO: continue fixing if/try statement above to match current db and attributes
+# TODO: continue fixing if/try statement above to match current db and attributes. figure out how to handle user_id in user_table
 
     def show_error(self, message):
         """Helper method to show error message box."""
@@ -135,20 +135,3 @@ class CreateAccount:
     def show_info(self, message):
         """Helper method to show info message box."""
         QMessageBox.information(self, "Success", message)
-
-    def check_username(username):
-        try:
-            conn = sqlite3.connect('db_tables/user.db')
-            cursor = conn.cursor()
-
-            cursor.execute(
-                "SELECT username FROM user_table WHERE username=?",
-                (username)
-            )
-            result = cursor.fetchone()
-            conn.close()
-            return result if result else None
-
-        except sqlite3.Error as e:
-            print("Database Error", f"An error occurred: {e}")
-            return None
