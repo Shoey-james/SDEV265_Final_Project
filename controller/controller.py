@@ -28,9 +28,9 @@ class Controller:
         self.phone = phone_input.text()
 
         # Validate input
-        if CreateAccount.validate_input(username, password, fname, lname, email, phone):
+        if CreateAccount.validate_input(self.username, self.password, self.fname, self.lname, self.email, self.phone):
             # If validation is successful, create the account
-            CreateAccount.create_acc(username, password, fname, lname, email, phone)
+            CreateAccount.create_acc(self.username, self.password, self.fname, self.lname, self.email, self.phone)
         # TODO: I have to fix create account logic in LoginLogic.py
             
             
