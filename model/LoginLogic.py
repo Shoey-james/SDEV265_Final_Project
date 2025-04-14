@@ -41,7 +41,7 @@ class CreateAccount:
         Returns: True if all inputs are valid, False otherwise.
         """
         print("validate_input initiated")
-        if not all([username, password, fname, lname, email]):
+        if not all([username, password, fname, lname, email, phone]):
             self.show_error("All fields are required!")
             return False
         
@@ -106,15 +106,15 @@ class CreateAccount:
         Ensures proper error handling to prevent database integrity issues.
         """
         print("create_acc")
-        self.username = username
+        """self.username = username
         self.password = password
         self.fname = fname
         self.lname = lname
         self.email = email
-        self.phone = phone
+        self.phone = phone"""
 
         # Validate the input fields and create the account if valid
-        if not self.validate_input(username, password, fname, lname, email, phone):
+        if not self.validate_input(self, username, password, fname, lname, email, phone):
             return  # Stop execution if validation fails
         
         try:

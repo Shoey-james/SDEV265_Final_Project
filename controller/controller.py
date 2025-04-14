@@ -32,8 +32,6 @@ class Controller:
             # If validation is successful, create the account
             CreateAccount.create_acc(self.username, self.password, self.fname, self.lname, self.email, self.phone)
         # TODO: I have to fix create account logic in LoginLogic.py
-            
-            
 
     def login_pressed(self, username_input, password_input):
         print("Login button pressed.")
