@@ -1,6 +1,7 @@
 # login_logic.py
 import sqlite3
 import re
+import PyQt6
 from PyQt6.QtWidgets import QMessageBox, QVBoxLayout
 
 class LoginLogic:
@@ -35,49 +36,49 @@ class LoginLogic:
 
 class CreateAccount:
 
-    def validate_input(controller, self, username, password, fname, lname, email, phone):
+    def validate_input(username, password, fname, lname, email, phone):
         """
         Validates the user input: username, password, first name, last name, email, phone number, and counselor's ID.
         Returns: True if all inputs are valid, False otherwise.
         """
         print("validate_input initiated")
         if not all([username, password, fname, lname, email, phone]):
-            self.show_error("All fields are required!")
+            show_error("All fields are required!")
             return False
         
         # Username validation: must be at least 4 characters long (up to 12), have at least 1 letter/1 digit, and no special characters
         username_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,12}$'
         if not re.match(username_regex, username):
-            self.show_error("Username must be 4-12 characters long, have one digit and one letter, and have no special characters!")
+            show_error("Username must be 4-12 characters long, have one digit and one letter, and have no special characters!")
             return False
 
         # Password validation: Must be at least 8 characters long and contain at least one letter and one digit
         password_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$'
         if not re.match(password_regex, password):
-            self.show_error("Password should be at least 8 characters long, and contain at least one letter and one number!")
+            show_error("Password should be at least 8 characters long, and contain at least one letter and one number!")
             return False
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         fname_regex = r'^[A-Za-z\s]{2,30}$'
         if not re.match(fname_regex, fname) or not re.match(fname_regex, fname):
-            self.show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
+            show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         lname_regex = r'^[A-Za-z\s]{2,30}$'
         if not re.match(lname_regex, lname) or not re.match(lname_regex, lname):
-            self.show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
+            show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
         # Email validation: Basic email format check
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_regex, email):
-            self.show_error("Please enter a valid email address.")
+            show_error("Please enter a valid email address.")
             return False
         
         phone_regex = r'^\+?[0-9]{10,15}$'
         if not re.match(phone_regex, phone):
-            self.show_error("Please enter a valid phone number (optional +, followed by 10-15 digits).")
+            show_error("Please enter a valid phone number (optional +, followed by 10-15 digits).")
             return False 
         
         try:
@@ -88,14 +89,14 @@ class CreateAccount:
             # Check for existing username and/or email
             cursor.execute("SELECT * FROM user_table WHERE username = ? OR email = ?", (username, email))
             if cursor.fetchone():
-                self.show_error("Username, or email already exists!")
+                showerror("Username, or email already exists!")
                 conn.close()
                 return False
 
             conn.close()
             
         except sqlite3.Error as e:  # Handle any SQLite database errors
-            self.show_error(f"An error occurred: {e}")
+            showerror(f"An error occurred: {e}")
             return False
         
         return True
