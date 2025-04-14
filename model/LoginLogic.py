@@ -43,42 +43,42 @@ class CreateAccount:
         """
         print("validate_input initiated")
         if not all([username, password, fname, lname, email, phone]):
-            show_error("All fields are required!")
+            print("All fields are required!")
             return False
         
         # Username validation: must be at least 4 characters long (up to 12), have at least 1 letter/1 digit, and no special characters
         username_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,12}$'
         if not re.match(username_regex, username):
-            show_error("Username must be 4-12 characters long, have one digit and one letter, and have no special characters!")
+            print("Username must be 4-12 characters long, have one digit and one letter, and have no special characters!")
             return False
 
         # Password validation: Must be at least 8 characters long and contain at least one letter and one digit
         password_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$'
         if not re.match(password_regex, password):
-            show_error("Password should be at least 8 characters long, and contain at least one letter and one number!")
+            print("Password should be at least 8 characters long, and contain at least one letter and one number!")
             return False
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         fname_regex = r'^[A-Za-z\s]{2,30}$'
         if not re.match(fname_regex, fname) or not re.match(fname_regex, fname):
-            show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
+            print("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         lname_regex = r'^[A-Za-z\s]{2,30}$'
         if not re.match(lname_regex, lname) or not re.match(lname_regex, lname):
-            show_error("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
+            print("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
         # Email validation: Basic email format check
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_regex, email):
-            show_error("Please enter a valid email address.")
+            print("Please enter a valid email address.")
             return False
         
         phone_regex = r'^\+?[0-9]{10,15}$'
         if not re.match(phone_regex, phone):
-            show_error("Please enter a valid phone number (optional +, followed by 10-15 digits).")
+            print("Please enter a valid phone number (optional +, followed by 10-15 digits).")
             return False 
         
         try:
@@ -89,14 +89,14 @@ class CreateAccount:
             # Check for existing username and/or email
             cursor.execute("SELECT * FROM user_table WHERE username = ? OR email = ?", (username, email))
             if cursor.fetchone():
-                showerror("Username, or email already exists!")
+                print("Username, or email already exists!")
                 conn.close()
                 return False
 
             conn.close()
             
         except sqlite3.Error as e:  # Handle any SQLite database errors
-            showerror(f"An error occurred: {e}")
+            print(f"An error occurred: {e}")
             return False
         
         return True
@@ -126,15 +126,17 @@ class CreateAccount:
                             VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
             conn.commit()
             conn.close()
-            self.show_info("Account created successfully!")
+            print("Account created successfully!")
         except (sqlite3.IntegrityError, sqlite3.Error) as e:
-            self.show_error(f"An error occurred: {e}")
+            print(f"An error occurred: {e}")
 # TODO: continue fixing if/try statement above to match current db and attributes. figure out how to handle user_id in user_table
-
+"""
     def show_error(self, message):
-        """Helper method to show error message box."""
+        #Helper method to show error message box.
         QMessageBox.critical(self, "Error", message)
 
     def show_info(self, message):
-        """Helper method to show info message box."""
+        #Helper method to show info message box.
         QMessageBox.information(self, "Success", message)
+        
+"""
