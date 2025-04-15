@@ -49,13 +49,9 @@ class CreateAccountDisplay(QMainWindow):
         self.email_input.setPlaceholderText("Email Address")
         self.email_input.setGeometry(220, 440, 360, 40)
         
-        self.phone_input = QLineEdit(self)
-        self.phone_input.setPlaceholderText("Phone Number")
-        self.phone_input.setGeometry(220, 500, 360, 40)
-
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
-        create_btn.clicked.connect(lambda: self.controller.reg_submit_clicked(self.username_input, self.password_input, self.fname_input, self.lname_input, self.email_input, self.phone_input))
+        create_btn.clicked.connect(lambda: self.controller.reg_submit_clicked(self.username_input, self.password_input, self.fname_input, self.lname_input, self.email_input))
         create_btn.setGeometry(220, 560, 360, 40)
 
     def center_window(self, width, height):

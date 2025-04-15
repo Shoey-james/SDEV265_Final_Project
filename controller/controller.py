@@ -15,7 +15,7 @@ class Controller:
         self.reg_page = CreateAccountDisplay(self)
         self.reg_page.show()
 
-    def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input, phone_input):
+    def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input):
         print("Registration form submit button pressed")
         # Assuming this code goes into a method of your PyQt app:
 
@@ -25,12 +25,11 @@ class Controller:
         self.fname = fname_input.text()
         self.lname = lname_input.text()
         self.email = email_input.text()
-        self.phone = phone_input.text()
 
         # Validate input
-        if CreateAccount.validate_input(self.username, self.password, self.fname, self.lname, self.email, self.phone):
+        if CreateAccount.validate_input(self.username, self.password, self.fname, self.lname, self.email):
             # If validation is successful, create the account
-            CreateAccount.create_acc(self.username, self.password, self.fname, self.lname, self.email, self.phone)
+            CreateAccount.create_acc(self.username, self.password, self.fname, self.lname, self.email)
         # TODO: I have to fix create account logic in LoginLogic.py
 
     def login_pressed(self, username_input, password_input):

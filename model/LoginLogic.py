@@ -36,13 +36,13 @@ class LoginLogic:
 
 class CreateAccount:
 
-    def validate_input(username, password, fname, lname, email, phone):
+    def validate_input(username, password, fname, lname, email):
         """
         Validates the user input: username, password, first name, last name, email, phone number, and counselor's ID.
         Returns: True if all inputs are valid, False otherwise.
         """
         print("validate_input initiated")
-        if not all([username, password, fname, lname, email, phone]):
+        if not all([username, password, fname, lname, email]):
             print("All fields are required!")
             return False
         
@@ -60,13 +60,13 @@ class CreateAccount:
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         fname_regex = r'^[A-Za-z\s]{2,30}$'
-        if not re.match(fname_regex, fname) or not re.match(fname_regex, fname):
+        if not re.match(fname_regex, fname):
             print("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
         # Name validation: Only letters and spaces, between 2 and 30 characters
         lname_regex = r'^[A-Za-z\s]{2,30}$'
-        if not re.match(lname_regex, lname) or not re.match(lname_regex, lname):
+        if not re.match(lname_regex, lname):
             print("First and last names should only contain letters and spaces, and be between 2 and 30 characters.")
             return False
         
@@ -75,11 +75,6 @@ class CreateAccount:
         if not re.match(email_regex, email):
             print("Please enter a valid email address.")
             return False
-        
-        phone_regex = r'^\+?[0-9]{10,15}$'
-        if not re.match(phone_regex, phone):
-            print("Please enter a valid phone number (optional +, followed by 10-15 digits).")
-            return False 
         
         try:
             # connect to DB
@@ -101,7 +96,7 @@ class CreateAccount:
         
         return True
 
-    def create_acc(self, username, password, fname, lname, email, phone):
+    def create_acc(self, username, password, fname, lname, email):
         """
         Collects user input, validates the data, and inserts a new patient record into the database.
         Ensures proper error handling to prevent database integrity issues.
@@ -115,15 +110,15 @@ class CreateAccount:
         self.phone = phone"""
 
         # Validate the input fields and create the account if valid
-        if not self.validate_input(self, username, password, fname, lname, email, phone):
+        if not self.validate_input(self, username, password, fname, lname, email):
             return  # Stop execution if validation fails
         
         try:
             conn = sqlite3.connect('db_tables/user.db')
             cursor = conn.cursor()
             # Insert the new patient record into the patient_users table
-            cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email, phone)
-                            VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email, phone))
+            cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email
+                            VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email))
             conn.commit()
             conn.close()
             print("Account created successfully!")
