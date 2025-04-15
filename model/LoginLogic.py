@@ -117,8 +117,8 @@ class CreateAccount:
             conn = sqlite3.connect('db_tables/user.db')
             cursor = conn.cursor()
             # Insert the new patient record into the patient_users table
-            cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email
-                            VALUES (?, ?, ?, ?, ?, ?)''', (username, password, fname, lname, email))
+            cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email)
+                            VALUES (?, ?, ?, ?, ?)''', (username, password, fname, lname, email))
             conn.commit()
             conn.close()
             print("Account created successfully!")
