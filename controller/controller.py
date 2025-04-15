@@ -30,7 +30,7 @@ class Controller:
         if CreateAccount.validate_input(self.username, self.password, self.fname, self.lname, self.email):
             # If validation is successful, create the account
             print("validation passed in account creation. Going to creat_acc logic")
-            CreateAccount.create_acc(self.username, self.password, self.fname, self.lname, self.email)
+            CreateAccount.create_acc(self, self.username, self.password, self.fname, self.lname, self.email)
         # TODO: I have to fix create account logic in LoginLogic.py
 
     def login_pressed(self, username_input, password_input):

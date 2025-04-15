@@ -96,7 +96,7 @@ class CreateAccount:
         
         return True
 
-    def create_acc(self, username, password, fname, lname, email):
+    def create_acc(controller, username, password, fname, lname, email):
         """
         Collects user input, validates the data, and inserts a new patient record into the database.
         Ensures proper error handling to prevent database integrity issues.
@@ -110,8 +110,8 @@ class CreateAccount:
         self.phone = phone"""
 
         # Validate the input fields and create the account if valid
-        if not self.validate_input(self, username, password, fname, lname, email):
-            return  # Stop execution if validation fails
+        #if not validate_input(username, password, fname, lname, email):
+            #return  # Stop execution if validation fails
         
         try:
             conn = sqlite3.connect('db_tables/user.db')
