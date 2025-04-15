@@ -124,7 +124,7 @@ class CreateAccount:
             print("Account created successfully!")
         except (sqlite3.IntegrityError, sqlite3.Error) as e:
             print(f"An error occurred: {e}")
-# TODO: continue fixing if/try statement above to match current db and attributes. figure out how to handle user_id in user_table
+# TODO: remake table. get rid of user_id column, make username the pk instead
 """
     def show_error(self, message):
         #Helper method to show error message box.
