@@ -1,8 +1,7 @@
 # login_logic.py
 import sqlite3
 import re
-import PyQt6
-from PyQt6.QtWidgets import QMessageBox, QVBoxLayout
+from PyQt6.QtWidgets import QMessageBox
 
 class LoginLogic:
     @staticmethod
@@ -15,8 +14,12 @@ class LoginLogic:
             print(f"Login successful! Welcome {username}")
             controller.login_successful(username)
         else:
-            QMessageBox.critical("Login Failed", "Invalid username or password.")
-
+            error_box = QMessageBox()
+            error_box.setIcon(QMessageBox.Icon.Warning)
+            error_box.setWindowTitle("Login Failed")
+            error_box.setText("Invalid username or password.")
+            error_box.exec()
+            
     def check_credentials(username, password):
         try:
             conn = sqlite3.connect('db_tables/user.db')
@@ -89,29 +92,33 @@ class CreateAccount:
                 return False
 
             conn.close()
+
+        except sqlite3.IntegrityError as e:  # Handle UNIQUE constraint failures, since username is key and must be unique.
+            print(f"Integrity error occurred: {e}")
+            error_box = QMessageBox()
+            error_box.setIcon(QMessageBox.Icon.Warning)
+            error_box.setWindowTitle("Account Creation Failed") # It is a database error but user doesn't need to see that.
+            error_box.setText("An account with this username may already exist.")
+            error_box.exec()
+            return False
             
         except sqlite3.Error as e:  # Handle any SQLite database errors
-            print(f"An error occurred: {e}")
+            print(f"A DATABASE error occurred: {e}")
+            error_box = QMessageBox()
+            error_box.setIcon(QMessageBox.Icon.Warning)
+            error_box.setWindowTitle("Unexpected Error") # It is a database error but user doesn't need to see that.
+            error_box.setText("An unexpected error occured while creating your account.")
+            error_box.exec()
             return False
-        
         return True
 
     def create_acc(controller, username, password, fname, lname, email):
+        this_controller = controller
         """
         Collects user input, validates the data, and inserts a new patient record into the database.
         Ensures proper error handling to prevent database integrity issues.
         """
         print("create_acc")
-        """self.username = username
-        self.password = password
-        self.fname = fname
-        self.lname = lname
-        self.email = email
-        self.phone = phone"""
-
-        # Validate the input fields and create the account if valid
-        #if not validate_input(username, password, fname, lname, email):
-            #return  # Stop execution if validation fails
         
         try:
             conn = sqlite3.connect('db_tables/user.db')
@@ -122,16 +129,7 @@ class CreateAccount:
             conn.commit()
             conn.close()
             print("Account created successfully!")
+            return True
+            
         except (sqlite3.IntegrityError, sqlite3.Error) as e:
             print(f"An error occurred: {e}")
-# TODO: remake table. get rid of user_id column, make username the pk instead
-"""
-    def show_error(self, message):
-        #Helper method to show error message box.
-        QMessageBox.critical(self, "Error", message)
-
-    def show_info(self, message):
-        #Helper method to show info message box.
-        QMessageBox.information(self, "Success", message)
-        
-"""

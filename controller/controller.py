@@ -2,6 +2,7 @@ from model.LoginLogic import LoginLogic, CreateAccount
 from view.HomePage import HomePage
 from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
+from PyQt6.QtWidgets import QMessageBox
 
 
 class Controller:
@@ -30,8 +31,15 @@ class Controller:
         if CreateAccount.validate_input(self.username, self.password, self.fname, self.lname, self.email):
             # If validation is successful, create the account
             print("validation passed in account creation. Going to creat_acc logic")
-            CreateAccount.create_acc(self, self.username, self.password, self.fname, self.lname, self.email)
-        # TODO: I have to fix create account logic in LoginLogic.py
+            if CreateAccount.create_acc(self, self.username, self.password, self.fname, self.lname, self.email):
+                print("Account was created, closing Create Account page.")
+                self.reg_page.close()
+                success_box = QMessageBox()
+                success_box.setIcon(QMessageBox.Icon.Information)
+                success_box.setWindowTitle("Account Created")
+                success_box.setText("Account successfully created. Please log in.")
+                success_box.exec()
+
 
     def login_pressed(self, username_input, password_input):
         print("Login button pressed.")
