@@ -13,9 +13,10 @@ class Units:
     def from_base(self, base_value:float) -> float:
         return base_value / self.base_size
 
-    def convert_to(self, target_unit: "Units", value:float) -> float:
+    def convert_to(self, target_unit: "Units", value:float):
         base_value = self.to_base(value)
-        return target_unit.from_base(base_value)
+        target_unit.from_base(base_value)
+        return target_unit, base_value
 
     """ Converts a string fraction from UI or input to a float value for conversions. """
     def to_decimal(self, value:str) -> float:
