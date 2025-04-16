@@ -1,17 +1,14 @@
-
-from PyQt6.QtWidgets import (
-    QWidget, QLabel
-)
+from PyQt6.QtWidgets import QMainWindow, QLabel
 from PyQt6.QtCore import Qt
 
-
-class MyFavoritesWindow():
+class MyFavoritesWindow(QMainWindow):  
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        self.setWindowTitle("RecipeSave")
+        self.setWindowTitle("RecipeSave || My Favorites")
         self.resize(800, 800)
-        self.center_window(800, 800)
+        #self.center_window(800, 800)
+        self.setObjectName("myFavorites")
 
         # Title Label
         title = QLabel("RecipeSave", self)

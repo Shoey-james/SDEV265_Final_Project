@@ -1,5 +1,6 @@
 from model.LoginLogic import LoginLogic, CreateAccount
 from view.HomePage import HomePage
+from view.MyFavoritesWindow import MyFavoritesWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
 from PyQt6.QtWidgets import QMessageBox
@@ -54,6 +55,18 @@ class Controller:
         self.home = HomePage(self, fname) # pass the controller as "self" and the first name
         self.home.show() # .show opens "HomePage"
         self.window.close() # this will close login page. "window" is LoginWindow class defined in controller.py
+        
+    # My Favorites button on HomePage.py press logic       
+    def favorite_pressed(self):
+        print("Favorite button pressed.")
+        self.favorite_page = MyFavoritesWindow(self)
+        self.favorite_page.show()
+    
+        
+    # sign out button on HomePage.py press logic   
+    def exit_pressed(self):     
+        print("Sign out button pressed.")
+        
         
     def get_fname(self, username):
         try:

@@ -41,7 +41,7 @@ class LoginWindow(QMainWindow):  # Inherit logic
 
         # Login Button
         login_btn = QPushButton("Login to Account", self)
-        login_btn.setObjectName("loginWindowButtons")
+        login_btn.setObjectName("loginWindowButtons") # css styling attached to name (reminder for JS)
         login_btn.clicked.connect(lambda: self.controller.login_pressed(username_input, password_input))  # TODO: access from LoginLogic
         login_btn.setGeometry(250, 320, 300, 40)
 
