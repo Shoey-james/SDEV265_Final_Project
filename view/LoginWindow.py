@@ -9,7 +9,7 @@ class LoginWindow(QMainWindow):  # Inherit logic
         super().__init__()
         self.controller = controller
         self.setWindowTitle("RecipeSave")
-        self.resize(800, 800)
+        self.resize(625, 800)
         self.center_window(800, 800)
         self.setObjectName("loginWindow")
 
@@ -20,18 +20,18 @@ class LoginWindow(QMainWindow):  # Inherit logic
         title = QLabel("RecipeSave", self)
         title.setObjectName("title")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setGeometry(200, 70, 400, 50)
+        title.setGeometry(156, 70, 312, 50)
 
         # Subtitle Label
         subtitle = QLabel("Please log in or create a new account", self)
         subtitle.setObjectName("subtitle")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        subtitle.setGeometry(200, 140, 400, 30)
+        subtitle.setGeometry(156, 140, 400, 30)
 
         # Input Fields
         username_input = QLineEdit(self)
         username_input.setPlaceholderText("Username")
-        username_input.setGeometry(220, 200, 360, 40)
+        username_input.setGeometry(180, 200, 360, 40)
 
         password_input = QLineEdit(self)
         password_input.setPlaceholderText("Password")
