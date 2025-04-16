@@ -59,7 +59,7 @@ class CreateAccountDisplay(QMainWindow):
         create_btn = QPushButton("Create an Account", self)
         create_btn.setObjectName("accountButtons")
         create_btn.clicked.connect(lambda: self.controller.reg_submit_clicked(self.username_input, self.password_input, self.fname_input, self.lname_input, self.email_input))
-        create_btn.setGeometry(220, 560, 360, 40)
+        create_btn.setGeometry(220, 500, 360, 40)
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()

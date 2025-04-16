@@ -85,7 +85,15 @@ class HomePage(QMainWindow):
         # TODO: add table next to search button
         # Note- Look up QListWidget, you might like it better than a table to contain the favorites list
         
-        #self.close or something similar for sign out button JS 
+        # Sign out button TODO: logic for sign out. self.close or something similar
+        create_btn = QPushButton("Sign Out", self)
+        create_btn.setObjectName("accountButtons")
+        create_btn.setGeometry(608, 250, 120, 30)
+        
+        # My favorites button TODO: logic for My Favorites, button to open MyFavorites.py page
+        create_btn = QPushButton("My Favorites", self)
+        create_btn.setObjectName("accountButtons")
+        create_btn.setGeometry(170, 250, 140, 30)
         #self.window.show to reopen login page
 
     def center_window(self, width, height):
