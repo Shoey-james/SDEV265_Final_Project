@@ -1,6 +1,7 @@
 from model.LoginLogic import LoginLogic, CreateAccount
 from view.HomePage import HomePage
 from view.MyFavoritesWindow import MyFavoritesWindow
+from view.LoginWindow import LoginWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
 from PyQt6.QtWidgets import QMessageBox
@@ -66,6 +67,9 @@ class Controller:
     # sign out button on HomePage.py press logic   
     def exit_pressed(self):     
         print("Sign out button pressed.")
+        self.window = LoginWindow(self)
+        self.window.show()
+        self.home.close()
         
         
     def get_fname(self, username):

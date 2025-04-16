@@ -88,6 +88,7 @@ class HomePage(QMainWindow):
         # Sign out button TODO: logic for sign out. self.close or something similar
         exit_btn = QPushButton("Sign Out", self)
         exit_btn.setObjectName("accountButtons")
+        exit_btn.clicked.connect(self.controller.exit_pressed)
         exit_btn.setGeometry(608, 250, 120, 30)
         
         # My favorites button TODO: logic for My Favorites, button to open MyFavorites.py page
@@ -95,7 +96,7 @@ class HomePage(QMainWindow):
         favorite_btn.setObjectName("accountButtons")
         favorite_btn.clicked.connect(self.controller.favorite_pressed)
         favorite_btn.setGeometry(170, 250, 140, 30)
-        #self.window.show to reopen login page
+
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
