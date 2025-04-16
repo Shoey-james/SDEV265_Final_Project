@@ -1,5 +1,3 @@
-
-
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow,  QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
 )
