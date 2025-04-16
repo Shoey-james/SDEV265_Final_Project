@@ -35,7 +35,7 @@ class HomePage(QMainWindow):
         self.subtitle.setObjectName("name")
         self.subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Containers
+        # Containers, ERICK REFERENCE HERE FOR CONTAINER LOGIC
         """ Logo """
         self.logo_container = QWidget()
         logo_layout = QVBoxLayout()
