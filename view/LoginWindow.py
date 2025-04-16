@@ -14,8 +14,6 @@ class LoginWindow(QMainWindow):  # Inherit logic
         self.setObjectName("loginWindow")
 
 
-
-
         # Title Label
         title = QLabel("RecipeSave", self)
         title.setObjectName("title")
@@ -26,30 +24,30 @@ class LoginWindow(QMainWindow):  # Inherit logic
         subtitle = QLabel("Please log in or create a new account", self)
         subtitle.setObjectName("subtitle")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        subtitle.setGeometry(156, 140, 400, 30)
+        subtitle.setGeometry(115, 140, 400, 30)
 
         # Input Fields
         username_input = QLineEdit(self)
         username_input.setPlaceholderText("Username")
-        username_input.setGeometry(180, 200, 360, 40)
+        username_input.setGeometry(136, 200, 360, 40)
 
         password_input = QLineEdit(self)
         password_input.setPlaceholderText("Password")
         password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        password_input.setGeometry(220, 260, 360, 40)
+        password_input.setGeometry(136, 260, 360, 40)
 
 
         # Login Button
         login_btn = QPushButton("Login to Account", self)
         login_btn.setObjectName("loginWindowButtons") # css styling attached to name (reminder for JS)
         login_btn.clicked.connect(lambda: self.controller.login_pressed(username_input, password_input))  # TODO: access from LoginLogic
-        login_btn.setGeometry(250, 320, 300, 40)
+        login_btn.setGeometry(166, 320, 300, 40)
 
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
         create_btn.setObjectName("loginWindowButtons")
         create_btn.clicked.connect(self.controller.create_account) # lambda not needed since no variables being sent through, unlike the login button 
-        create_btn.setGeometry(250, 380, 300, 40)
+        create_btn.setGeometry(166, 380, 300, 40)
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
