@@ -14,12 +14,13 @@ class CreateAccountDisplay(QMainWindow):
         self.setWindowTitle("RecipeSave || Create an Account")
         self.resize(800, 800)
         self.center_window(800, 800)
+        self.setObjectName("createAccount")
 
         # Title Label
         title = QLabel("Sign up for Recipe Save!", self)
         title.setObjectName("title")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setGeometry(200, 70, 400, 50)
+        title.setGeometry(200, 70, 450, 50)
 
         # Subtitle Label
         subtitle = QLabel("Fill in the fields to create an account", self)
@@ -28,6 +29,11 @@ class CreateAccountDisplay(QMainWindow):
         subtitle.setGeometry(200, 140, 400, 30)
 
         # Form for Login
+        self.form_background = QWidget(self)
+        self.form_background.setGeometry(200, 180, 400, 450)
+        self.form_background.setObjectName("formBackground")
+        self.form_background.lower()
+
         self.username_input = QLineEdit(self)
         self.username_input.setPlaceholderText("Username")
         self.username_input.setGeometry(220, 200, 360, 40)
@@ -51,6 +57,7 @@ class CreateAccountDisplay(QMainWindow):
         
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
+        create_btn.setObjectName("accountButtons")
         create_btn.clicked.connect(lambda: self.controller.reg_submit_clicked(self.username_input, self.password_input, self.fname_input, self.lname_input, self.email_input))
         create_btn.setGeometry(220, 560, 360, 40)
 

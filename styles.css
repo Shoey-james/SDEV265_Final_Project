@@ -1,6 +1,7 @@
 /* General Styling Template */
 
 /* General QWidget Styling*/
+
 QWidget {
     background-color: #ea8e0e;
     color: #000000;
@@ -9,7 +10,20 @@ QWidget {
     font-weight: bold;
 }
 
+#loginWindow {
+    background-image: url("images/another_orange_background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;   
+}
+#createAccount {
+    background-image: url("images/orange_background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;   
+}
+
+
 #title {
+    background-color: transparent;
     color:#000000;
     font-family: "Helvetica", sans-serif;
     font-size: 36px;
@@ -17,6 +31,7 @@ QWidget {
 }
 
 #subtitle {
+    background-color: transparent;
     color:#000000;
     font-family: "Helvetica", sans-serif;
     font-size: 20px;
@@ -37,33 +52,77 @@ QLineEdit {
     
 }
 
-/* Buttons */
-QPushButton {
-    background-color: #f0d907;
-    color: #000000;
-    border: 2px solid #3b3b3b;
+#loginWindowButtons {
+    background-image: url("images/black_button.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    color: #ffffff;
     font-family: "Helvetica", sans-serif;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
+
+    border: none;
+    border-radius: 10px;
+
+    text-align: center;
+    padding-left: 20px; 
+    padding-right: 20px;
+    height: 40px;
+    line-height: 40px; 
 }
-/* Button Effects */
-QPushButton:hover {
-    background-color: #e3be06;
-    border: 2px solid #202020;
+#loginWindowButtons:hover {
+    background-color: #ffaa00;
+    color: #f5d1b6;
+    border: 2px outset white;
+    font-style: italic;
+    
+}
+#loginWindowButtons:pressed {
+    background-color: #cc8800;
+    color: white;
+    font-size: 14px;
+}
+#loginWindowButtons:focus {
+    border: 2px inset white;
+    color: #ffffff;
 }
 
-QPushButton:pressed {
-    background-color: #ffee53;
-    border: 2px solid #383737;
-}
+#accountButtons {
+    background-image: url("images/orange_button.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
 
-QPushButton:focus {
-    outline: none;
-    border: 2px solid #202020;
-}
+    color: #000000;
+    font-family: "Helvetica", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
 
+    border: none;
+    border-radius: 10px;
+
+    text-align: center;
+    padding-left: 20px; 
+    padding-right: 20px;
+    height: 40px;
+    line-height: 40px; 
+}
+#accountButtons:hover {
+    background-color: #ffaa00;
+    color: #362201;
+    border: 2px outset rgb(247, 146, 5);
+    font-style: italic;
+    
+}
+#accountButtons:pressed {
+    background-color: #cc8800;
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+}
+#accountButtons:focus {
+    border: 2px inset rgb(247, 146, 5);
+    color: #000000;
+}
 /* Containers */
 #searchContainer {
     background-color: #313131;
@@ -71,6 +130,11 @@ QPushButton:focus {
     padding: 10px;
 }
 #favoritesContainer {
+    background-color: #313131;
+    border-radius: 8px;
+    padding: 10px;
+}
+#formBackground {
     background-color: #313131;
     border-radius: 8px;
     padding: 10px;

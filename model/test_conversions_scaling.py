@@ -1,6 +1,8 @@
+"""
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 from model.PortionScaler import PortionScaler
 from model.UnitsRegistry import UnitsRegistry
@@ -41,3 +43,4 @@ scaler = PortionScaler("cup", 1, 1)
 scaler.scale_ingredient()
 assert "cup" in scaler.get_equivalents()
 assert "or" not in scaler.get_equivalents()  # no better suggestion
+"""

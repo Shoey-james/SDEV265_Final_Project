@@ -2,7 +2,6 @@
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QLabel, QLineEdit, QPushButton
 )
-from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
 class LoginWindow(QMainWindow):  # Inherit logic
@@ -12,21 +11,11 @@ class LoginWindow(QMainWindow):  # Inherit logic
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)
-        """
-        # Set background
-        self.setAutoFillBackground(True)
-        palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor("white"))
-        self.setPalette(palette)
+        self.setObjectName("loginWindow")
 
-        # Fonts and colors
-        top_font = QFont("Helvetica", 35, QFont.Weight.Bold)
-        sub_label_font = QFont("Helvetica", 16)
-        button_font = QFont("Helvetica", 12, QFont.Weight.Bold)
-        color_font = "Black"
-        button_bg = "Beige"
-        button_fg = "Black"
-        """
+
+
+
         # Title Label
         title = QLabel("RecipeSave", self)
         title.setObjectName("title")
@@ -52,17 +41,15 @@ class LoginWindow(QMainWindow):  # Inherit logic
 
         # Login Button
         login_btn = QPushButton("Login to Account", self)
-        #login_btn.setFont(button_font)
-        #login_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
+        login_btn.setObjectName("loginWindowButtons")
         login_btn.clicked.connect(lambda: self.controller.login_pressed(username_input, password_input))  # TODO: access from LoginLogic
-        login_btn.setGeometry(220, 320, 360, 40)
+        login_btn.setGeometry(250, 320, 300, 40)
 
         # Create Account Button
         create_btn = QPushButton("Create an Account", self)
-        #create_btn.setFont(button_font)
-        #create_btn.setStyleSheet(f"background-color: {button_bg}; color: {button_fg};")
+        create_btn.setObjectName("loginWindowButtons")
         create_btn.clicked.connect(self.controller.create_account) # lambda not needed since no variables being sent through, unlike the login button 
-        create_btn.setGeometry(220, 380, 360, 40)
+        create_btn.setGeometry(250, 380, 300, 40)
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
