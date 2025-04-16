@@ -125,12 +125,12 @@ QLineEdit {
 }
 /* Containers */
 #searchContainer {
-    background-color: #313131;
+    background-image: url("images/black_background.jpg");
     border-radius: 8px;
     padding: 10px;
 }
 #favoritesContainer {
-    background-color: #313131;
+    background-image: url("images/black_background.jpg");
     border-radius: 8px;
     padding: 10px;
 }
