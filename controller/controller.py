@@ -4,7 +4,7 @@ from view.MyFavoritesWindow import MyFavoritesWindow
 from view.LoginWindow import LoginWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import (QMessageBox, QMainWindow, QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout, QListWidget, QListWidgetItem)
 
 
 class Controller:
@@ -88,3 +88,23 @@ class Controller:
         except sqlite3.Error as e:
             print("Database Error", f"An error occurred: {e}")
             return None
+        
+    def load_favorites_table(self):
+        try:
+            # Connect to your SQLite database
+            conn = sqlite3.connect("favorites_table.db")  # Replace this with your actual DB file
+            cursor = conn.cursor()
+
+            # Fetch favorite recipes for the current user
+            cursor.execute("SELECT rec_name FROM favorites_table WHERE user_name = ?", (self.username[0],))
+            rows = cursor.fetchall()
+
+            # Populate the list
+            for row in rows:
+                item = QListWidgetItem(row[0])
+                self.favorites_list.addItem(item)
+
+            conn.close()
+
+        except sqlite3.Error as e:
+            print("Error loading favorites:", e)

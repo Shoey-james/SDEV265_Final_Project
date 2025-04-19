@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout
+    QMainWindow, QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, QPushButton, QVBoxLayout, QListWidget, QListWidgetItem
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
@@ -14,6 +14,7 @@ class HomePage(QMainWindow):
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)
+
 
     
         # Home Page
@@ -46,12 +47,18 @@ class HomePage(QMainWindow):
         self.search_container.setFixedSize(350, 500)
         search_layout = QHBoxLayout()
         self.search_container.setLayout(search_layout)
+        
+        
         """ Favorites """
         self.favorites_container = QWidget()
         self.favorites_container.setObjectName("favoritesContainer")
         self.favorites_container.setFixedSize(350, 500)
         favorites_layout = QHBoxLayout()
         self.favorites_container.setLayout(favorites_layout)
+        # widget for favorite container to display favorites_table db info
+        self.favorites_list = QListWidget() # list widget for displaying favorites
+        favorites_layout.addWidget(self.favorites_list)
+        self.controller.load_favorites_table() # populates the favorites list from the database
 
         # Horizontal layout to hold search and favorites
         search_fav_layout = QHBoxLayout()
@@ -85,17 +92,19 @@ class HomePage(QMainWindow):
         # TODO: add table next to search button
         # Note- Look up QListWidget, you might like it better than a table to contain the favorites list
         
-        # Sign out button TODO: logic for sign out. self.close or something similar
+        # Sign out button
         exit_btn = QPushButton("Sign Out", self)
         exit_btn.setObjectName("accountButtons")
         exit_btn.clicked.connect(self.controller.exit_pressed)
         exit_btn.setGeometry(608, 250, 120, 30)
         
-        # My favorites button TODO: logic for My Favorites, button to open MyFavorites.py page
+        # My favorites page pop-up button
         favorite_btn = QPushButton("My Favorites", self)
         favorite_btn.setObjectName("accountButtons")
         favorite_btn.clicked.connect(self.controller.favorite_pressed)
         favorite_btn.setGeometry(170, 250, 140, 30)
+        
+    
 
 
     def center_window(self, width, height):
