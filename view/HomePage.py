@@ -56,9 +56,9 @@ class HomePage(QMainWindow):
         favorites_layout = QHBoxLayout()
         self.favorites_container.setLayout(favorites_layout)
         # widget for favorite container to display favorites_table db info TODO: finish favorites_table, test functionality of favorites display after
-        self.favorites_list = QListWidget() # list widget for displaying favorites
+        """ self.favorites_list = QListWidget() # list widget for displaying favorites
         favorites_layout.addWidget(self.favorites_list)
-        self.controller.load_favorites_table() # populates the favorites list from the database
+        self.controller.load_favorites_table() # populates the favorites list from the database """
 
         # Horizontal layout to hold search and favorites
         search_fav_layout = QHBoxLayout()

@@ -88,7 +88,7 @@ class Controller:
         except sqlite3.Error as e:
             print("Database Error", f"An error occurred: {e}")
             return None
-        
+    """   
     def load_favorites_table(self):
         try:
             # Connect to your SQLite database
@@ -108,3 +108,4 @@ class Controller:
 
         except sqlite3.Error as e:
             print("Error loading favorites:", e)
+    """ 
