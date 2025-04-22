@@ -1,6 +1,6 @@
 from model.LoginLogic import LoginLogic, CreateAccount
 from view.HomePage import HomePage
-from view.MyFavoritesWindow import MyFavoritesWindow
+from view.RecipesWIndow import RecipesWindow
 from view.LoginWindow import LoginWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
 import sqlite3
@@ -72,9 +72,9 @@ class Controller:
         self.window.close() # this will close login page. "window" is LoginWindow class defined in controller.py
         
     # My Favorites button on HomePage.py press logic       
-    def favorite_pressed(self):
-        print("Favorite button pressed.")
-        self.favorite_page = MyFavoritesWindow(self)
+    def recipes_pressed(self):
+        print("Recipes button pressed.")
+        self.favorite_page = RecipesWindow(self)
         self.favorite_page.show()
     
         

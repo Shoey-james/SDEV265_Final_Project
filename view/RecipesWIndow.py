@@ -7,14 +7,14 @@ from PyQt6.QtCore import Qt
 
 # TODO: change everything over to add recipe display page. will be able to manage recipe db from this page 
 # (add/remove recipes,favorite/unfavorite them, access portion calculator possibly from here)
-class MyFavoritesWindow(QMainWindow):  
+class RecipesWindow(QMainWindow):  
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        self.setWindowTitle("RecipeSave || My Favorites")
+        self.setWindowTitle("RecipeSave || My Recipes")
         self.resize(800, 800)
         self.center_window(800, 800)
-        self.setObjectName("myFavorites")
+        self.setObjectName("myRecipes")
         
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
