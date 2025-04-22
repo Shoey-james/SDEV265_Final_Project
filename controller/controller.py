@@ -53,7 +53,7 @@ class Controller:
         self.username = username
         print(f"Controller has received {self.username} as active. Opening Home Page.")
         fname = self.get_fname(self.username)
-        self.home = HomePage(self, fname) # pass the controller as "self" and the first name
+        self.home = HomePage(self, fname, self.username) # pass the controller as "self" and the first name
         self.home.show() # .show opens "HomePage"
         self.window.close() # this will close login page. "window" is LoginWindow class defined in controller.py
         

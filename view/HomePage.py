@@ -8,10 +8,11 @@ import sqlite3
 
 
 class HomePage(QMainWindow):
-    def __init__(self, controller, fname):
+    def __init__(self, controller, fname, username):
         super().__init__()
         self.controller = controller
         self.current_user = fname
+        self.username = username
         self.setWindowTitle("RecipeSave")
         self.resize(800, 800)
         self.center_window(800, 800)
@@ -109,17 +110,19 @@ class HomePage(QMainWindow):
     def load_favorites_table(self):
         try:
             # Connect to your SQLite database
-            conn = sqlite3.connect('db_tables/tables.db')  # Replace this with your actual DB file
+            conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
             # Fetch favorite recipes for the current user
-            cursor.execute("SELECT rec_name FROM favorites_table WHERE user_name = ?", (self.username[0],))
+            cursor.execute("SELECT rec_id FROM favorites_table WHERE username = ?", (self.username))
             rows = cursor.fetchall()
 
             # Populate the list
+            i = 0
             for row in rows:
-                item = QListWidgetItem(row[0])
+                item = QListWidgetItem(row[i])
                 self.favorites_list.addItem(item)
+                i += 1
 
             conn.close()
 
