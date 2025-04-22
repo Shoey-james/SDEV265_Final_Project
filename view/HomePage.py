@@ -109,28 +109,52 @@ class HomePage(QMainWindow):
     
     def load_favorites_table(self):
         try:
+            print(self.username)
             # Connect to your SQLite database
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
             # Fetch favorite recipes for the current user
-            cursor.execute("SELECT rec_id FROM favorites_table WHERE username = ?", (self.username))
-            rows = cursor.fetchall()
-
-            # Populate the list
-            i = 0
-            for row in rows:
-                item = QListWidgetItem(row[i])
-                self.favorites_list.addItem(item)
-                i += 1
-
+            cursor.execute("SELECT rec_id FROM favorites_table WHERE username = ? ", (self.username,))
+            #cursor.execute("SELECT rec_id FROM favorites_table WHERE username = 'user1'")
+            rec_list = cursor.fetchall()
+            
             conn.close()
-
+            return rec_list
+            
         except sqlite3.Error as e:
             print("Error loading favorites:", e)
+            
+    def load_rec_name(self, rec_list): # rec name and info get pulled from this function
+        rec_info:list
+        try:
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT rec_name, rec_img  FROM recipe_table WHERE rec_id = ?", (rec_list))
+            rec_info = [row[0] for row in cursor.fetchall()]
+            
+            conn.close()
+            return rec_info
 
+            
+        except sqlite3.Error as e:
+            print("Error loading rec_name:", e)
+            
+    def create_favorites_display(self, rec_info):
+        # Populate the list (from load favorites)
+        i = 0
+        for row in rec_info:
+            item = QListWidgetItem(row[i])
+            self.favorites_list.addItem(item)
+            i += 1
+
+            
+            
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
         x = (screen.width() - width) // 2
         y = (screen.height() - height) // 2
         self.move(x, y)
+        
+        
+

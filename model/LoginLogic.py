@@ -50,9 +50,9 @@ class CreateAccount:
             return False
         
         # Username validation: must be at least 4 characters long (up to 12), have at least 1 letter/1 digit, and no special characters
-        username_regex = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,12}$'
+        username_regex = r'^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,12}$'
         if not re.match(username_regex, username):
-            print("Username must be 4-12 characters long, have one digit and one letter, and have no special characters!")
+            print("Username must be 4-12 characters long, all lowercase, have one digit and one letter, and have no special characters!")
             return False
 
         # Password validation: Must be at least 8 characters long and contain at least one letter and one digit
