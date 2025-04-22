@@ -133,6 +133,22 @@ QLineEdit {
     background-image: url("images/black_background.jpg");
     border-radius: 8px;
     padding: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+#favoritesList {
+    background: transparent;
+}
+#faveRecWidget{
+    background: transparent;
+}
+#faveRecipeName{
+    background: transparent;
+    color: white
+}
+#faveImg{
+    background: transparent;
 }
 #formBackground {
     background-color: #313131;

@@ -59,6 +59,7 @@ class HomePage(QMainWindow):
         self.favorites_container.setLayout(favorites_layout)
         # widget for favorite container to display favorites_table db info TODO: finish favorites_table, test functionality of favorites display after
         self.favorites_list = QListWidget() # list widget for displaying favorites
+        self.favorites_list.setObjectName("favoritesList")
         favorites_layout.addWidget(self.favorites_list)
         self.load_favorites_table() # populates the favorites list from the database """
 
@@ -117,22 +118,26 @@ class HomePage(QMainWindow):
             # Fetch favorite recipes for the current user
             cursor.execute("SELECT rec_id FROM favorites_table WHERE username = ? ", (self.username,))
             #cursor.execute("SELECT rec_id FROM favorites_table WHERE username = 'user1'")
-            rec_list = cursor.fetchall()
+            rec_tuple = cursor.fetchall()
             
             conn.close()
-            return self.load_rec_name(rec_list)
+            return self.load_rec_name(rec_tuple)
             
         except sqlite3.Error as e:
             print("Error loading favorites:", e)
             
-    def load_rec_name(self, rec_list): # rec name and info get pulled from this function
+    def load_rec_name(self, rec_tuple): # rec name and info get pulled from this function
         print("load_rec_name")
+        rec_list = [row[0] for row in rec_tuple] # make the tuple a list
         try:
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
-            #cursor.execute("SELECT rec_name FROM recipe_table WHERE rec_id = ?", (rec_list,))   # TODO: fix this so we dont have to hard code '1' in 
-            cursor.execute("SELECT rec_name FROM recipe_table WHERE rec_id = ?", ('1'))
-            rec_info = cursor.fetchall()
+            if rec_list:  # runs if list is not empty
+                placeholders = ','.join(['?'] * len(rec_list)) # creates a list of , and ? for each item in rec_list
+                cursor.execute(f"SELECT rec_name, rec_img FROM recipe_table WHERE rec_id IN ({placeholders})", rec_list)
+                rec_info = cursor.fetchall()
+            else: # runs if there are not recipes in the favorites list
+                rec_info = []
             
             conn.close()
             return self.create_favorites_display(rec_info)
@@ -144,13 +149,37 @@ class HomePage(QMainWindow):
     def create_favorites_display(self, rec_info):
         print("create_favorites_display")
         # Populate the list (from load favorites)
-        i = 0
+        
         for row in rec_info:
-            item = QListWidgetItem(row[i])
-            self.favorites_list.addItem(item)
-            i += 1
-            
+            name = row[0]
+            img = row[1]
 
+            # Create widget to hold name and image
+            fave_rec_widget = QWidget()
+            fave_rec_widget.setObjectName("faveRecWidget")
+            layout = QHBoxLayout()
+            layout.setContentsMargins(5,5,5,5)
+
+            # Label for the image
+            img_label= QLabel()
+            img_label.setObjectName("faveImg")
+            pixmap = QPixmap(img).scaled(64,64)
+            img_label.setPixmap(pixmap)
+
+            # Label for the name
+            name_label = QLabel(name)
+            name_label.setObjectName("faveRecipeName")
+
+
+            layout.addWidget(img_label)
+            layout.addWidget(name_label)
+            fave_rec_widget.setLayout(layout)
+
+            item = QListWidgetItem()
+            item.setSizeHint(fave_rec_widget.sizeHint())
+            self.favorites_list.addItem(item)
+            self.favorites_list.setItemWidget(item, fave_rec_widget)
+            
             
             
     def center_window(self, width, height):
