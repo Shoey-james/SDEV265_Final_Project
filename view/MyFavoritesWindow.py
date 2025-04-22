@@ -4,6 +4,9 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
+
+# TODO: change everything over to add recipe display page. will be able to manage recipe db from this page 
+# (add/remove recipes,favorite/unfavorite them, access portion calculator possibly from here)
 class MyFavoritesWindow(QMainWindow):  
     def __init__(self, controller):
         super().__init__()

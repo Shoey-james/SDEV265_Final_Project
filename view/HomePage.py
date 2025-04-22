@@ -101,8 +101,8 @@ class HomePage(QMainWindow):
         exit_btn.clicked.connect(self.controller.exit_pressed)
         exit_btn.setGeometry(608, 250, 120, 30)
         
-        # My favorites page pop-up button
-        favorite_btn = QPushButton("My Favorites", self)
+        # add recipe page pop-up button TODO: make "add recipe" page: add recipe form list (populate db table when recipe added)
+        favorite_btn = QPushButton("Add Recipe", self)
         favorite_btn.setObjectName("accountButtons")
         favorite_btn.clicked.connect(self.controller.favorite_pressed)
         favorite_btn.setGeometry(170, 250, 140, 30)
