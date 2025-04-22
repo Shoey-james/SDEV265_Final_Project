@@ -120,33 +120,36 @@ class HomePage(QMainWindow):
             rec_list = cursor.fetchall()
             
             conn.close()
-            return rec_list
+            return self.load_rec_name(rec_list)
             
         except sqlite3.Error as e:
             print("Error loading favorites:", e)
             
     def load_rec_name(self, rec_list): # rec name and info get pulled from this function
-        rec_info:list
+        print("load_rec_name")
         try:
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
-            cursor.execute("SELECT rec_name, rec_img  FROM recipe_table WHERE rec_id = ?", (rec_list))
-            rec_info = [row[0] for row in cursor.fetchall()]
+            #cursor.execute("SELECT rec_name FROM recipe_table WHERE rec_id = ?", (rec_list,))   # TODO: fix this so we dont have to hard code '1' in 
+            cursor.execute("SELECT rec_name FROM recipe_table WHERE rec_id = ?", ('1'))
+            rec_info = cursor.fetchall()
             
             conn.close()
-            return rec_info
+            return self.create_favorites_display(rec_info)
 
             
         except sqlite3.Error as e:
             print("Error loading rec_name:", e)
             
     def create_favorites_display(self, rec_info):
+        print("create_favorites_display")
         # Populate the list (from load favorites)
         i = 0
         for row in rec_info:
             item = QListWidgetItem(row[i])
             self.favorites_list.addItem(item)
             i += 1
+            
 
             
             
