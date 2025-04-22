@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
+import sqlite3
 
 
 
@@ -56,9 +57,9 @@ class HomePage(QMainWindow):
         favorites_layout = QHBoxLayout()
         self.favorites_container.setLayout(favorites_layout)
         # widget for favorite container to display favorites_table db info TODO: finish favorites_table, test functionality of favorites display after
-        """ self.favorites_list = QListWidget() # list widget for displaying favorites
+        self.favorites_list = QListWidget() # list widget for displaying favorites
         favorites_layout.addWidget(self.favorites_list)
-        self.controller.load_favorites_table() # populates the favorites list from the database """
+        self.load_favorites_table() # populates the favorites list from the database """
 
         # Horizontal layout to hold search and favorites
         search_fav_layout = QHBoxLayout()
@@ -105,7 +106,25 @@ class HomePage(QMainWindow):
         favorite_btn.setGeometry(170, 250, 140, 30)
         
     
+    def load_favorites_table(self):
+        try:
+            # Connect to your SQLite database
+            conn = sqlite3.connect('db_tables/tables.db')  # Replace this with your actual DB file
+            cursor = conn.cursor()
 
+            # Fetch favorite recipes for the current user
+            cursor.execute("SELECT rec_name FROM favorites_table WHERE user_name = ?", (self.username[0],))
+            rows = cursor.fetchall()
+
+            # Populate the list
+            for row in rows:
+                item = QListWidgetItem(row[0])
+                self.favorites_list.addItem(item)
+
+            conn.close()
+
+        except sqlite3.Error as e:
+            print("Error loading favorites:", e)
 
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()

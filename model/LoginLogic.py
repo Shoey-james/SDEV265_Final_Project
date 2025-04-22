@@ -22,7 +22,7 @@ class LoginLogic:
             
     def check_credentials(username, password):
         try:
-            conn = sqlite3.connect('db_tables/user.db')
+            conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
             cursor.execute(
@@ -81,7 +81,7 @@ class CreateAccount:
         
         try:
             # connect to DB
-            conn = sqlite3.connect('db_tables/user.db')
+            conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
             # Check for existing username and/or email
@@ -121,7 +121,7 @@ class CreateAccount:
         print("create_acc")
         
         try:
-            conn = sqlite3.connect('db_tables/user.db')
+            conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
             # Insert the new patient record into the patient_users table
             cursor.execute('''INSERT INTO user_table (username, password, fname, lname, email)
