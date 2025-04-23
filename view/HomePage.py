@@ -227,3 +227,26 @@ class HomePage(QMainWindow):
         
         
 
+
+
+
+        """
+        # scrollbar code from kayla's last project, should be able to reuse the code
+        
+        
+        scroll_area = QScrollArea()  # Initialize scroll area
+        scroll_area.setWidgetResizable(True)  # Allow dynamic resizing
+        event_container = QWidget()  # Create container widget for events
+        self.event_layout = QVBoxLayout()  # Create vertical layout for events
+        event_container.setLayout(self.event_layout)  # Set event layout as container's layout
+        scroll_area.setWidget(event_container)  # Assign container to scroll area
+        self.main_layout.addWidget(scroll_area)  # Add scroll area to main layout
+        
+        """
+
+
+
+
+
+
+
