@@ -49,6 +49,7 @@ class LoginWindow(QMainWindow):  # Inherit logic
         create_btn.clicked.connect(self.controller.create_account) # lambda not needed since no variables being sent through, unlike the login button 
         create_btn.setGeometry(166, 380, 300, 40)
 
+
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
         x = (screen.width() - width) // 2
