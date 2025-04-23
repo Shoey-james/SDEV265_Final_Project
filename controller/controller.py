@@ -11,21 +11,27 @@ class Controller:
 
     def search(self):
         print("searching ")
+        self.search_list:list
         try:
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
             result = cursor.execute(
-                "SELECT rec_name FROM recipe_table WHERE rec_name LIKE 'p%'"
+                "SELECT rec_name, rec_img FROM recipe_table WHERE rec_name LIKE 'p%'"
                 )
-            result = cursor.fetchone()
+            result = cursor.fetchall()
             conn.close()
             print(result)
-            return result if result else None
+            if result:
+                self.search_list = [row[0] for row in result]
+            else:
+                self.search_list = []
+            return HomePage.search_display(self, self.search_list)
 
         except sqlite3.Error as e:
             print("Database Error", f"An error occurred: {e}")
             return None
+        
 
     def create_account(self):
         print("Opening Registration Form")

@@ -63,11 +63,6 @@ class HomePage(QMainWindow):
         favorites_layout.addWidget(self.favorites_list)
         self.load_favorites_table() # populates the favorites list from the database """
 
-        # Horizontal layout to hold search and favorites
-        search_fav_layout = QHBoxLayout()
-        search_fav_layout.addWidget(self.search_container)
-        search_fav_layout.addWidget(self.favorites_container)
-
         # Logo
         """ Placeholder for photo """
         self.logo_label = QLabel()
@@ -76,15 +71,26 @@ class HomePage(QMainWindow):
         pixmap = pixmap.scaledToWidth(650)
         self.logo_label.setPixmap(pixmap)
         logo_layout.addWidget(self.logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
+
         # Search Recipes
         """ Input Field """
         self.search_bar = QLineEdit()
         """ Button """
         self.search_btn = QPushButton("Search", self)
         self.search_btn.clicked.connect(self.controller.search)
+        """ Search List """
+        self.search_list = QListWidget() # list widget for displaying search results
+        self.search_list.setObjectName("favoritesList")
+
+        # Horizontal layout to hold search and favorites
+        search_fav_layout = QHBoxLayout()
+        search_fav_layout.addWidget(self.search_container)
+        search_fav_layout.addWidget(self.favorites_container)
         # Add to Search Layout
         search_layout.addWidget(self.search_bar, alignment=Qt.AlignmentFlag.AlignTop)
         search_layout.addWidget(self.search_btn, alignment=Qt.AlignmentFlag.AlignTop)
+        search_layout.addWidget(self.search_list)
+
 
         # Add containers to layout
         layout.addWidget(self.logo_container)
@@ -179,6 +185,37 @@ class HomePage(QMainWindow):
             item.setSizeHint(fave_rec_widget.sizeHint())
             self.favorites_list.addItem(item)
             self.favorites_list.setItemWidget(item, fave_rec_widget)
+
+    def search_display(self, search_list):
+        for row in search_list:
+            name = row[0]
+            search_img = row[1]
+
+            # Create widget to hold name and image
+            search_rec_widget = QWidget()
+            search_rec_widget.setObjectName("faveRecWidget")
+            layout = QHBoxLayout()
+            layout.setContentsMargins(5,5,5,5)
+
+            # Label for the image
+            img_label= QLabel()
+            img_label.setObjectName("faveImg")
+            pixmap = QPixmap(search_img).scaled(64,64)
+            img_label.setPixmap(pixmap)
+
+            # Label for the name
+            name_label = QLabel(name)
+            name_label.setObjectName("faveRecipeName")
+
+
+            layout.addWidget(img_label)
+            layout.addWidget(name_label)
+            search_rec_widget.setLayout(layout)
+
+            recipe = QListWidgetItem()
+            recipe.setSizeHint(search_rec_widget.sizeHint())
+            self.search_list.addItem(recipe)
+            self.search_list.setItemWidget(recipe, search_rec_widget)
             
             
             
