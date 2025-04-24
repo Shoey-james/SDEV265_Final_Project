@@ -49,6 +49,7 @@ class HomePage(QMainWindow):
         self.search_container.setFixedSize(350, 500)
         search_layout = QHBoxLayout()
         self.search_container.setLayout(search_layout)
+
         
         
         """ Favorites """
@@ -77,10 +78,7 @@ class HomePage(QMainWindow):
         self.search_bar = QLineEdit()
         """ Button """
         self.search_btn = QPushButton("Search", self)
-        self.search_btn.clicked.connect(self.controller.search)
-        """ Search List """
-        self.search_list = QListWidget() # list widget for displaying search results
-        self.search_list.setObjectName("favoritesList")
+        self.search_btn.clicked.connect(lambda: self.controller.search(self.search_bar, self))
 
         # Horizontal layout to hold search and favorites
         search_fav_layout = QHBoxLayout()
@@ -89,18 +87,13 @@ class HomePage(QMainWindow):
         # Add to Search Layout
         search_layout.addWidget(self.search_bar, alignment=Qt.AlignmentFlag.AlignTop)
         search_layout.addWidget(self.search_btn, alignment=Qt.AlignmentFlag.AlignTop)
-        search_layout.addWidget(self.search_list)
-
 
         # Add containers to layout
         layout.addWidget(self.logo_container)
         layout.addWidget(self.title)
         layout.addWidget(self.subtitle)
         layout.addLayout(search_fav_layout)
-        # table
-        # TODO: add table next to search button
-        # Note- Look up QListWidget, you might like it better than a table to contain the favorites list
-        
+
         # Sign out button
         exit_btn = QPushButton("Sign Out", self)
         exit_btn.setObjectName("accountButtons")
@@ -186,38 +179,10 @@ class HomePage(QMainWindow):
             self.favorites_list.addItem(item)
             self.favorites_list.setItemWidget(item, fave_rec_widget)
 
-    def search_display(self, search_list):
-        for row in search_list:
-            name = row[0]
-            search_img = row[1]
-
-            # Create widget to hold name and image
-            search_rec_widget = QWidget()
-            search_rec_widget.setObjectName("faveRecWidget")
-            layout = QHBoxLayout()
-            layout.setContentsMargins(5,5,5,5)
-
-            # Label for the image
-            img_label= QLabel()
-            img_label.setObjectName("faveImg")
-            pixmap = QPixmap(search_img).scaled(64,64)
-            img_label.setPixmap(pixmap)
-
-            # Label for the name
-            name_label = QLabel(name)
-            name_label.setObjectName("faveRecipeName")
-
-
-            layout.addWidget(img_label)
-            layout.addWidget(name_label)
-            search_rec_widget.setLayout(layout)
-
-            recipe = QListWidgetItem()
-            recipe.setSizeHint(search_rec_widget.sizeHint())
-            self.search_list.addItem(recipe)
-            self.search_list.setItemWidget(recipe, search_rec_widget)
-            
-            
+    def search_display(self, search_info):
+        self.search_popup_window = SearchPopupWindow(search_info)
+        self.search_popup_window.show()
+        
             
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
@@ -244,9 +209,42 @@ class HomePage(QMainWindow):
         
         """
 
+class SearchPopupWindow(QWidget):
+    def __init__(self, results):
+        super().__init__()
+        self.setObjectName("searchPopup")
+        self.setWindowTitle("Search Results")
+        self.setMinimumSize(400, 300)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        self.result_list = QListWidget()
+        self.result_list.setObjectName("searchList")
+        layout.addWidget(self.result_list)
+
+        for name, img_path, desc in results:
+            widget = QWidget()
+            inner_layout = QVBoxLayout()
+            name_label = QLabel(name)
+            desc_label = QLabel(desc)
 
 
+            if img_path:
+                img_label = QLabel()
+                pixmap = QPixmap(img_path).scaled(64, 64)
+                img_label.setPixmap(pixmap)
+                inner_layout.addWidget(img_label)
 
+            widget.setObjectName("searchItem")         # container widget
+            name_label.setObjectName("searchTitle")    # recipe name
+            desc_label.setObjectName("searchDesc")     # description
+            img_label.setObjectName("searchImage")     # image label
 
+            inner_layout.addWidget(name_label)
+            inner_layout.addWidget(desc_label)
+            widget.setLayout(inner_layout)
 
-
+            item = QListWidgetItem()
+            item.setSizeHint(widget.sizeHint())
+            self.result_list.addItem(item)
+            self.result_list.setItemWidget(item, widget)

@@ -9,28 +9,48 @@ from PyQt6.QtWidgets import QMessageBox
 
 class Controller:
 
-    def search(self):
-        print("searching ")
-        self.search_list:list
+    def search(self, search_bar, page):
+        print("searching")
         try:
+        # Connect to your SQLite database
+            user_query = search_bar.text()
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
-            result = cursor.execute(
-                "SELECT rec_name, rec_img FROM recipe_table WHERE rec_name LIKE 'p%'"
-                )
-            result = cursor.fetchall()
+            # Fetch favorite recipes for the current user
+            # Search for recipes where rec_name partially matches the search query
+            cursor.execute(
+                "SELECT rec_id FROM recipe_table WHERE rec_name LIKE ?", ('%' + user_query + '%',)
+            )
+            #cursor.execute("SELECT rec_id FROM favorites_table WHERE username = 'user1'")
+            search_tuple = cursor.fetchall()
+            
             conn.close()
-            print(result)
-            if result:
-                self.search_list = [row[0] for row in result]
-            else:
-                self.search_list = []
-            return HomePage.search_display(self, self.search_list)
+            return self.load_searched_rec(search_tuple, page)
 
         except sqlite3.Error as e:
             print("Database Error", f"An error occurred: {e}")
             return None
+        
+    def load_searched_rec (self, search_tuple, page): # rec name and info get pulled from this function
+        print("load_rec_name")
+        search_list = [row[0] for row in search_tuple] # make the tuple a list
+        try:
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
+            if search_list:  # runs if list is not empty
+                placeholders = ','.join(['?'] * len(search_list)) # creates a list of , and ? for each item in rec_list
+                cursor.execute(f"SELECT rec_name, rec_img, rec_desc FROM recipe_table WHERE rec_id IN ({placeholders})", search_list)
+                search_info = cursor.fetchall()
+            else: # runs if there are not recipes in the favorites list
+                search_info = []
+            
+            conn.close()
+            return page.search_display(search_info)
+
+            
+        except sqlite3.Error as e:
+            print("Error loading rec_name:", e)
         
 
     def create_account(self):
