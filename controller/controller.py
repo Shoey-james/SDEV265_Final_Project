@@ -1,5 +1,5 @@
 from model.LoginLogic import LoginLogic, CreateAccount
-from view.HomePage import HomePage
+from view.HomePage import HomePage, SearchPopupWindow
 from view.RecipesWIndow import RecipesWindow
 from view.LoginWindow import LoginWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
@@ -51,6 +51,9 @@ class Controller:
             
         except sqlite3.Error as e:
             print("Error loading rec_name:", e)
+
+    def result_recipe_clicked(self, recipe_name):
+        print("Searched recipe clicked: ", recipe_name)
         
 
     def create_account(self):

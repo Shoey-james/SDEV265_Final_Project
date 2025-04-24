@@ -180,7 +180,7 @@ class HomePage(QMainWindow):
             self.favorites_list.setItemWidget(item, fave_rec_widget)
 
     def search_display(self, search_info):
-        self.search_popup_window = SearchPopupWindow(search_info)
+        self.search_popup_window = SearchPopupWindow(search_info, self.controller)
         self.search_popup_window.show()
         
             
@@ -210,11 +210,12 @@ class HomePage(QMainWindow):
         """
 
 class SearchPopupWindow(QWidget):
-    def __init__(self, results):
+    def __init__(self, results, controller):
         super().__init__()
-        self.setObjectName("searchPopup")
+        self.controller = controller
+        self.setObjectName("searchPopupWin")
         self.setWindowTitle("Search Results")
-        self.setMinimumSize(400, 300)
+        self.setMinimumSize(500, 300)
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -223,7 +224,7 @@ class SearchPopupWindow(QWidget):
         layout.addWidget(self.result_list)
 
         for name, img_path, desc in results:
-            widget = QWidget()
+            result_button = ClickableWidget(name, controller)
             inner_layout = QVBoxLayout()
             name_label = QLabel(name)
             desc_label = QLabel(desc)
@@ -235,16 +236,48 @@ class SearchPopupWindow(QWidget):
                 img_label.setPixmap(pixmap)
                 inner_layout.addWidget(img_label)
 
-            widget.setObjectName("searchItem")         # container widget
             name_label.setObjectName("searchTitle")    # recipe name
             desc_label.setObjectName("searchDesc")     # description
             img_label.setObjectName("searchImage")     # image label
-
+            result_button.setLayout(inner_layout)
             inner_layout.addWidget(name_label)
             inner_layout.addWidget(desc_label)
-            widget.setLayout(inner_layout)
 
             item = QListWidgetItem()
-            item.setSizeHint(widget.sizeHint())
+            item.setSizeHint(result_button.sizeHint())
             self.result_list.addItem(item)
-            self.result_list.setItemWidget(item, widget)
+            self.result_list.setItemWidget(item, result_button)
+
+class ClickableWidget(QWidget):
+    def __init__(self, name, controller):
+        super().__init__()
+        self.recipe_name = name
+        self.controller = controller
+        self.setObjectName("searchItem")
+        self.setStyleSheet("""
+            QWidget#searchItem {
+                background-color: #1a1a1a;
+                color: white;
+                border: 2px groove #ffaa00;
+                border-radius: 12px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            QWidget#searchItem:hover {
+                background-color: #4b2502;
+                border-color: #ffbb55;
+            }
+
+            QWidget#searchItem:pressed {
+                background-color: #331600;
+                border-color: #cc6600;
+                border: 2px ridge #ffaa00;
+            }
+        """)
+        self.setAutoFillBackground(True)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+
+
+    def mousePressEvent(self, event):
+        self.controller.result_recipe_clicked(self.recipe_name)
