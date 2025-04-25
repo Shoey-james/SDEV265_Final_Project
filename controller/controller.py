@@ -17,7 +17,6 @@ class Controller:
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
-            # Fetch favorite recipes for the current user
             # Search for recipes where rec_name partially matches the search query
             cursor.execute(
                 "SELECT rec_id FROM recipe_table WHERE rec_name LIKE ?", ('%' + user_query + '%',)
@@ -40,7 +39,7 @@ class Controller:
             cursor = conn.cursor()
             if search_list:  # runs if list is not empty
                 placeholders = ','.join(['?'] * len(search_list)) # creates a list of , and ? for each item in rec_list
-                cursor.execute(f"SELECT rec_name, rec_img, rec_desc FROM recipe_table WHERE rec_id IN ({placeholders})", search_list)
+                cursor.execute(f"SELECT rec_id, rec_name, rec_img, rec_desc FROM recipe_table WHERE rec_id IN ({placeholders})", search_list)
                 search_info = cursor.fetchall()
             else: # runs if there are not recipes in the favorites list
                 search_info = []
@@ -101,10 +100,10 @@ class Controller:
         self.window.close() # this will close login page. "window" is LoginWindow class defined in controller.py
         
     # My Favorites button on HomePage.py press logic       
-    def recipes_pressed(self):
-        print("Recipes button pressed.")
-        self.favorite_page = RecipesWindow(self)
-        self.favorite_page.show()
+    def recipes_pressed(self, rec_id):
+        print("Recipe Full view button pressed.")
+        self.full_recipe_view = RecipesWindow(self, rec_id)
+        self.full_recipe_view.show()
     
         
     # sign out button on HomePage.py press logic   

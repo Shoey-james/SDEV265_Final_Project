@@ -116,79 +116,6 @@ class HomePage(QMainWindow):
         favorite_btn.clicked.connect(self.controller.recipes_pressed)
         favorite_btn.setGeometry(170, 250, 140, 30)
     
-    """ # code to be reused to display recipes under search bar similar to favorites container
-    def load_recipe_table(self):
-        try:
-            print(self.username)
-            # Connect to your SQLite database
-            conn = sqlite3.connect('db_tables/tables.db')
-            cursor = conn.cursor()
-
-            # Fetch favorite recipes for the current user
-            cursor.execute("SELECT rec_id FROM recipe_table WHERE username = ? ", (self.username,))
-            #cursor.execute("SELECT rec_id FROM favorites_table WHERE username = 'user1'")
-            rec_tuple = cursor.fetchall()
-            
-            conn.close()
-            return self.load_rec_name(rec_tuple)
-            
-        except sqlite3.Error as e:
-            print("Error loading recipes:", e)
-            
-    def load_rec_name(self, rec_tuple): # rec name and info get pulled from this function
-        print("load_rec_name")
-        rec_list = [row[0] for row in rec_tuple] # make the tuple a list
-        try:
-            conn = sqlite3.connect('db_tables/tables.db')
-            cursor = conn.cursor()
-            if rec_list:  # runs if list is not empty
-                placeholders = ','.join(['?'] * len(rec_list)) # creates a list of , and ? for each item in rec_list
-                cursor.execute(f"SELECT rec_name, rec_img FROM recipe_table WHERE rec_id IN ({placeholders})", rec_list)
-                rec_info = cursor.fetchall()
-            else: # runs if there are not recipes in the favorites list
-                rec_info = []
-            
-            conn.close()
-            return self.create_recipes_display(rec_info)
-
-            
-        except sqlite3.Error as e:
-            print("Error loading rec_name:", e)
-            
-    def create_favorites_display(self, rec_info):
-        print("create_favorites_display")
-        # Populate the list (from load favorites)
-        
-        for row in rec_info:
-            name = row[0]
-            img = row[1]
-
-            # Create widget to hold name and image
-            fave_rec_widget = QWidget()
-            fave_rec_widget.setObjectName("faveRecWidget")
-            layout = QHBoxLayout()
-            layout.setContentsMargins(5,5,5,5)
-
-            # Label for the image
-            img_label= QLabel()
-            img_label.setObjectName("faveImg")
-            pixmap = QPixmap(img).scaled(64,64)
-            img_label.setPixmap(pixmap)
-
-            # Label for the name
-            name_label = QLabel(name)
-            name_label.setObjectName("faveRecipeName")
-
-
-            layout.addWidget(img_label)
-            layout.addWidget(name_label)
-            fave_rec_widget.setLayout(layout)
-
-            item = QListWidgetItem()
-            item.setSizeHint(fave_rec_widget.sizeHint())
-            self.favorites_list.addItem(item)
-            self.favorites_list.setItemWidget(item, fave_rec_widget)
-    """
     def load_favorites_table(self):
         try:
             print(self.username)
@@ -305,8 +232,8 @@ class SearchPopupWindow(QWidget):
         self.result_list.setObjectName("searchList")
         layout.addWidget(self.result_list)
 
-        for name, img_path, desc in results:
-            result_button = ClickableWidget(name, controller)
+        for rec_id, name, img_path, desc in results:
+            result_button = ClickableWidget(rec_id, name, controller)
             inner_layout = QVBoxLayout()
             name_label = QLabel(name)
             desc_label = QLabel(desc)
@@ -331,9 +258,10 @@ class SearchPopupWindow(QWidget):
             self.result_list.setItemWidget(item, result_button)
 
 class ClickableWidget(QWidget):
-    def __init__(self, name, controller):
+    def __init__(self, rec_id, name, controller):
         super().__init__()
-        self.recipe_name = name
+        self.rec_id = rec_id
+        self.name = name
         self.controller = controller
         self.setObjectName("searchItem")
         self.setStyleSheet("""
@@ -362,4 +290,5 @@ class ClickableWidget(QWidget):
 
 
     def mousePressEvent(self, event):
-        self.controller.result_recipe_clicked(self.recipe_name)
+        print("Recipe ID being clicked: ", self.rec_id)
+        self.controller.recipes_pressed(self.rec_id)
