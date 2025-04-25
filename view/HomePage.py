@@ -26,6 +26,10 @@ class HomePage(QMainWindow):
         self.setCentralWidget(self.home_page)
         self.home_page.setLayout(layout)
 
+        # Logo 
+        self.logo_container = QWidget()
+        logo_layout = QVBoxLayout()
+        self.logo_container.setLayout(logo_layout)
 
         # Title Label
         self.title = QLabel("Welcome", self)
@@ -39,10 +43,7 @@ class HomePage(QMainWindow):
         self.subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
 # Containers
-        """ Logo """
-        self.logo_container = QWidget()
-        logo_layout = QVBoxLayout()
-        self.logo_container.setLayout(logo_layout)
+
         """ Search """
         self.search_container = QWidget()
         self.search_container.setObjectName("searchContainer")

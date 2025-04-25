@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
+    QApplication, QMainWindow,  QWidget, QLabel, QLineEdit, QPushButton
 )
-from PyQt6.QtGui import QFont, QColor, QPalette
 from PyQt6.QtCore import Qt
 
 
@@ -28,6 +27,7 @@ class CreateAccountDisplay(QMainWindow):
 
         # Form for Login
         self.form_background = QWidget(self)
+        # putting a layout vbox
         self.form_background.setGeometry(200, 180, 400, 450)
         self.form_background.setObjectName("formBackground")
         self.form_background.lower()
