@@ -185,4 +185,50 @@ QLineEdit {
     border-radius: 5px;
     margin-bottom: 5px;
 }
+QWidget#fullRecipe {
+    background-color: #121212;
+    color: #f0f0f0;
+    padding: 20px;
+    margin: 0;
+}
+
+QLabel#recFullViewName {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffaa00;
+    margin-bottom: 15px;
+    background-color: transparent;
+}
+
+QLabel#component {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffbb55;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    background-color: transparent;
+}
+
+QLabel#ingredient {
+    font-size: 16px;
+    margin-left: 20px;
+    margin-bottom: 3px;
+    color: #dddddd;
+    background-color: transparent;
+}
+
+QLabel#directions {
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 1.5em;
+    color: #dddddd;
+    padding: 10px 10px 10px 10px;
+    border-top: 1px dotted #ffaa00;
+    background-color: transparent;
+}
+QLabel#recipeImage {
+    background: transparent;
+    border: none;
+}
+
 

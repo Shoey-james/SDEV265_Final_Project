@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QPushButton
+    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QFormLayout, QPushButton
 )
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
@@ -15,15 +15,20 @@ class RecipesWindow(QMainWindow):
         self.controller = controller
         self.rec_id = rec_id
         self.setWindowTitle("RecipeSave || Full Recipe View")
-        self.resize(800, 800)
-        self.center_window(800, 800)
-        self.setObjectName("fullRecipe")
+        self.resize(800, 600)
+        self.center_window(800, 600)
         
+        # Scroll area for the whole window
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
         # Set up the vertical flow of data
         container = QWidget()
+        container.setObjectName("fullRecipe")
         layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         container.setLayout(layout)
-        self.setCentralWidget(container)
+        scroll_area.setWidget(container)
+        self.setCentralWidget(scroll_area)
 
         # Get the recipe info
         conn = sqlite3.connect('db_tables/tables.db')
@@ -50,6 +55,7 @@ class RecipesWindow(QMainWindow):
         self.name_label.setObjectName("recFullViewName")
         if image:
             self.img_label = QLabel()
+            self.img_label.setObjectName("recipeImage")
             img = QPixmap(image).scaledToWidth(300)
             self.img_label.setPixmap(img)
 
@@ -72,6 +78,8 @@ class RecipesWindow(QMainWindow):
         # Create widget for directions
         self.directions_label = QLabel(directions)
         self.directions_label.setObjectName("directions")
+        self.directions_label.setWordWrap(True)
+        self.directions_label.setMaximumWidth(700) 
         layout.addWidget(self.directions_label)
 
     def group_by_comp(self, ingredients):
