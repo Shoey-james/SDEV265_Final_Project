@@ -51,9 +51,43 @@ class Controller:
         except sqlite3.Error as e:
             print("Error loading rec_name:", e)
 
-    def result_recipe_clicked(self, recipe_name):
-        print("Searched recipe clicked: ", recipe_name)
+    def all_recipes(self, page):
+        print("retrieveing all recipes")
+        try:
+        # Connect to database
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
+
+            # Search for all recipes
+            cursor.execute("SELECT rec_id FROM recipe_table")
+            recipe_tuple = cursor.fetchall()
+            
+            conn.close()
+            return self.load_all_rec(recipe_tuple, page)
+
+        except sqlite3.Error as e:
+            print("Database Error", f"An error occurred: {e}")
+            return None
         
+    def load_all_rec (self, recipe_tuple, page): # rec name and info get pulled from this function
+        print("load_rec_name")
+        recipe_list = [row[0] for row in recipe_tuple] # make the tuple a list
+        try:
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
+            if recipe_list:  # runs if list is not empty
+                placeholders = ','.join(['?'] * len(recipe_list)) # creates a list of , and ? for each item in rec_list
+                cursor.execute(f"SELECT rec_id, rec_name, rec_img, rec_desc FROM recipe_table WHERE rec_id IN ({placeholders})", recipe_list)
+                all_info = cursor.fetchall()
+            else: # runs if there are not recipes in the favorites list
+                all_info = []
+            
+            conn.close()
+            return page.search_display(all_info)
+
+            
+        except sqlite3.Error as e:
+            print("Error loading rec_name:", e)
 
     def create_account(self):
         print("Opening Registration Form")

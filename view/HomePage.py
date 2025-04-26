@@ -49,13 +49,7 @@ class HomePage(QMainWindow):
         self.search_container.setObjectName("searchContainer")
         self.search_container.setFixedSize(350, 500)
         search_layout = QHBoxLayout()
-        self.search_container.setLayout(search_layout)
-# Widget for search container to also display recipes currently in database
-        #self.recipe_container_list = QListWidget() # list widget for displaying recipes
-        #self.recipe_container_list.setObjectName("recipesList")
-        #search_layout.addWidget(self.recipe_container_list)
-        #self.load_recipe_table()  #TODO: create function and rest of functions to display recipess
-        
+        self.search_container.setLayout(search_layout)      
         
         """ Favorites """
         self.favorites_container = QWidget()
@@ -104,17 +98,11 @@ class HomePage(QMainWindow):
         exit_btn.setObjectName("accountButtons")
         exit_btn.clicked.connect(self.controller.exit_pressed)
         exit_btn.setGeometry(608, 250, 120, 30)
-        """
-        # add recipe page pop-up button TODO: make "add recipe" page: add recipe form list (populate db table when recipe added)
-        favorite_btn = QPushButton("Recipes", self)
-        favorite_btn.setObjectName("accountButtons")
-        favorite_btn.clicked.connect(self.controller.recipes_pressed)
-        favorite_btn.setGeometry(170, 250, 140, 30)
-        """
-        favorite_btn = QPushButton("Recipes", self)
-        favorite_btn.setObjectName("accountButtons")
-        favorite_btn.clicked.connect(self.controller.recipes_pressed)
-        favorite_btn.setGeometry(170, 250, 140, 30)
+        
+        all_rec_btn = QPushButton("Recipes", self)
+        all_rec_btn.setObjectName("accountButtons")
+        all_rec_btn.clicked.connect(lambda: self.controller.all_recipes(self))
+        all_rec_btn.setGeometry(170, 250, 140, 30)
     
     def load_favorites_table(self):
         try:
@@ -192,6 +180,9 @@ class HomePage(QMainWindow):
         self.search_popup_window = SearchPopupWindow(search_info, self.controller)
         self.search_popup_window.show()
         
+    def all_rec_display(self, all_info):
+        self.all_popup_window = SearchPopupWindow(all_info, self.controller)
+        self.all_popup_window.show()
             
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()
@@ -223,9 +214,11 @@ class SearchPopupWindow(QWidget):
         super().__init__()
         self.controller = controller
         self.setObjectName("searchPopupWin")
-        self.setWindowTitle("Search Results")
-        self.setMinimumSize(500, 300)
+        self.setWindowTitle("Recipes")
+        self.setMinimumSize(550, 300)
+        self.setMaximumSize(550, 600)
         layout = QVBoxLayout()
+        layout.setSpacing(10)  
         self.setLayout(layout)
 
         self.result_list = QListWidget()

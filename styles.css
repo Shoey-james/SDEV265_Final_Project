@@ -160,7 +160,7 @@ QLineEdit {
     background-color: black;
     border: 3px solid #cc6600;
     border-radius: 10px;
-    padding: 10px;
+    padding-right: 5px;
     font-family: "Helvetica", sans-serif;
     color: white;
 }
@@ -217,12 +217,10 @@ QLabel#ingredient {
     background-color: transparent;
 }
 
-QLabel#directions {
+QTextEdit#directions {
     font-size: 16px;
-    margin-top: 20px;
     line-height: 1.5em;
     color: #dddddd;
-    padding: 10px 10px 10px 10px;
     border-top: 1px dotted #ffaa00;
     background-color: transparent;
 }
@@ -230,5 +228,50 @@ QLabel#recipeImage {
     background: transparent;
     border: none;
 }
+QScrollBar:vertical {
+    background: #121212;
+    width: 10px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    border:#000000;
+}
 
+QScrollBar::handle:vertical {
+    background: #ffaa00;
+    min-height: 30px;
+    border-radius: 50px;
+    margin: 10px 10px ;
+    border:#000000;
+}
 
+QScrollBar::handle:vertical:hover {
+    background: #ffdd80;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    background: none;
+    border: none;
+    height: 0px;
+    width: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+QScrollBar::up-arrow:vertical,
+QScrollBar::down-arrow:vertical {
+    background: none;
+    border: none;
+    height: 0px;
+    width: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+    margin: 0;
+    padding: 0;
+}

@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QFormLayout, QPushButton
+    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton
 )
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
@@ -76,11 +76,14 @@ class RecipesWindow(QMainWindow):
                 layout.addWidget(self.ing_label)
 
         # Create widget for directions
-        self.directions_label = QLabel(directions)
-        self.directions_label.setObjectName("directions")
-        self.directions_label.setWordWrap(True)
-        self.directions_label.setMaximumWidth(700) 
-        layout.addWidget(self.directions_label)
+        self.directions_text = QTextEdit()
+        self.directions_text.setObjectName("directions")
+        self.directions_text.setReadOnly(True)
+        self.directions_text.setPlainText(directions)
+        self.directions_text.setMaximumWidth(800) 
+        directions_height = self.directions_text.size().height()
+        self.directions_text.setFixedHeight(int(directions_height) + 50)
+        layout.addWidget(self.directions_text)
 
     def group_by_comp(self, ingredients):
         grouped = defaultdict(list)
