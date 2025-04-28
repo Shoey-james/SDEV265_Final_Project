@@ -215,8 +215,8 @@ class SearchPopupWindow(QWidget):
         self.controller = controller
         self.setObjectName("searchPopupWin")
         self.setWindowTitle("Recipes")
-        self.setMinimumSize(550, 300)
-        self.setMaximumSize(550, 600)
+        self.setMinimumSize(700, 600)
+        self.setMaximumSize(800, 700)
         layout = QVBoxLayout()
         layout.setSpacing(10)  
         self.setLayout(layout)
