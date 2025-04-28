@@ -15,8 +15,8 @@ class RecipesWindow(QMainWindow):
         self.controller = controller
         self.rec_id = rec_id
         self.setWindowTitle("RecipeSave || Full Recipe View")
-        self.resize(1000, 900)
-        self.center_window(1000, 900)
+        self.resize(800, 700)
+        self.center_window(800, 700)
         
         # Scroll area for the whole window
         scroll_area = QScrollArea()
