@@ -18,4 +18,4 @@ if __name__ == "__main__":
     controller.window = window
     window.show()  # Show the main window
     
-    sys.exit(app.exec())  # Start the event loopuser1
+    sys.exit(app.exec())  # Start the event loop user1
