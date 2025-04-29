@@ -275,3 +275,25 @@ QScrollBar::sub-page:vertical {
     margin: 0;
     padding: 0;
 }
+QWidget#scalingButtonContainer {
+    background-color: transparent;
+}
+QPushButton#scalingButtons {
+    color: white;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    padding: 4px 8px; 
+    border-radius: 12px; 
+    font-size: 14px;
+    background-image: url("images/orange_button.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+QPushButton#scalingButtons:hover {
+    background-color: darkorange;
+    border: 2px solid white; 
+    padding: 3px 7px; 
+}

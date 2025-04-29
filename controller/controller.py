@@ -165,5 +165,37 @@ class Controller:
             print("Database Error", f"An error occurred: {e}")
             return None
 
+    def scaling_pressed(self, clicked_button, scaling_buttons):
+        print(clicked_button, "pressed.")
+        # First, reset all scaling buttons
+        for button in scaling_buttons:
+            button.setStyleSheet("""
+                QPushButton#scalingButtons {
+                    color: white;
+                    min-width: 40px;
+                    min-height: 40px;
+                    max-width: 40px;
+                    max-height: 40px;
+                    padding: 4px 8px;
+                    border-radius: 12px;
+                    font-size: 14px;
+                    background-image: url("images/orange_button.jpg");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    border: none;
+                }
+                QPushButton#scalingButtons:hover {
+                    background-color: darkorange;
+                    border: 2px solid white;
+                    padding: 3px 7px;
+                }
+            """)
 
+        clicked_button.setStyleSheet(button.styleSheet() + """
+        QPushButton#scalingButtons {
+            background-color: #a84300;
+            border: 3px double white;
+            padding: 2px 6px;
+        }
+    """)
 

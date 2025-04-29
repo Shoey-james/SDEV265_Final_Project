@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton
+    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton, QHBoxLayout
 )
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
@@ -62,7 +62,32 @@ class RecipesWindow(QMainWindow):
         # Add widgets to layout
         layout.addWidget(self.name_label)
         layout.addWidget(self.img_label)
-        
+
+        # Scaling buttons
+        self.button_container = QWidget()
+        self.button_container.setObjectName("scalingButtonContainer")
+        button_layout = QHBoxLayout()
+        self.button_container.setLayout(button_layout)
+        self.onex = QPushButton("1x")
+        self.onex.setObjectName("scalingButtons")
+        self.onex.clicked.connect(lambda: self.controller.scaling_pressed(self.onex, self.scaling_buttons))
+        self.twox = QPushButton("2x")
+        self.twox.setObjectName("scalingButtons")
+        self.twox.clicked.connect(lambda: self.controller.scaling_pressed(self.twox, self.scaling_buttons))
+        self.threex = QPushButton("3x")
+        self.threex.setObjectName("scalingButtons")
+        self.threex.clicked.connect(lambda: self.controller.scaling_pressed(self.threex, self.scaling_buttons))
+        self.fourx = QPushButton("4x")
+        self.fourx.setObjectName("scalingButtons")
+        self.fourx.clicked.connect(lambda: self.controller.scaling_pressed(self.fourx, self.scaling_buttons))
+        self.scaling_buttons = [self.onex, self.twox, self.threex, self.fourx]
+        button_layout.addWidget(self.onex)
+        button_layout.addWidget(self.twox)
+        button_layout.addWidget(self.threex)
+        button_layout.addWidget(self.fourx)
+
+        layout.addWidget(self.button_container)
+
         #Group Ingredients
         grouped = self.group_by_comp(ingredients)
         for component, ing_list in grouped.items():
