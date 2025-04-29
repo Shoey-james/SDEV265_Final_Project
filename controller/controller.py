@@ -198,4 +198,6 @@ class Controller:
             padding: 2px 6px;
         }
     """)
-
+    
+    def favbtn_pressed(self, fav_btn):
+        print("Favorites button pressed")

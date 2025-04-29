@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton, QHBoxLayout
+    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton, QHBoxLayout, 
 )
-from PyQt6.QtGui import QPixmap
-from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap, QIcon
+from PyQt6.QtCore import Qt, QSize
 import sqlite3
 from collections import defaultdict
 
@@ -51,26 +51,38 @@ class RecipesWindow(QMainWindow):
         conn.close()
 
         # Create widgets to display recipe
+        self.title_container = QWidget()
+        self.title_container.setObjectName("titleContainer")
+        title_layout = QHBoxLayout()
+        self.title_container.setLayout(title_layout)
         self.name_label = QLabel(name)
         self.name_label.setObjectName("recFullViewName")
+        title_layout.addWidget(self.name_label)
+                # Favorite button
+        self.favbtn = QPushButton("favorite")
+        self.favbtn.setObjectName("favoriteButton")
+        star = QPixmap("images/star_outline.png")
+        width = 20
+        height = 20
+        resized_star = star.scaled(width, height, Qt.AspectRatioMode.KeepAspectRatio)
+        #icon = QIcon(resized_star)
+        self.favbtn.setIcon(QIcon(resized_star))
+        self.favbtn.setIconSize(QSize(20, 20)) 
+        self.favbtn.setFixedSize(30, 30)
+        self.favbtn.setFlat(True)
+        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, self.favorite_button))
+        title_layout.addWidget(self.favbtn)
+        title_layout.addStretch()
+        layout.addWidget(self.title_container)
+
         if image:
             self.img_label = QLabel()
             self.img_label.setObjectName("recipeImage")
             img = QPixmap(image).scaledToWidth(300)
             self.img_label.setPixmap(img)
-
-        # Add widgets to layout
-        layout.addWidget(self.name_label)
         layout.addWidget(self.img_label)
         
-        # Favorite button
-        self.button_container = QWidget()
-        self.button_container.setObjectName("favoriteButtonContainer")
-        button_layout = QHBoxLayout()
-        self.button_container.setLayout(button_layout)
-        self.favbtn = QPushButton("favorite")
-        self.favbtn.setObjectName("favoriteButton")
-        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, self.favorite_button))
+
         """
         # adding action to a button
         button.clicked.connect(self.clickme)
