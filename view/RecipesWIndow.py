@@ -62,6 +62,22 @@ class RecipesWindow(QMainWindow):
         # Add widgets to layout
         layout.addWidget(self.name_label)
         layout.addWidget(self.img_label)
+        
+        # Favorite button
+        self.button_container = QWidget()
+        self.button_container.setObjectName("favoriteButtonContainer")
+        button_layout = QHBoxLayout()
+        self.button_container.setLayout(button_layout)
+        self.favbtn = QPushButton("favorite")
+        self.favbtn.setObjectName("favoriteButton")
+        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, self.favorite_button))
+        """
+        # adding action to a button
+        button.clicked.connect(self.clickme)
+
+        # setting icon to the button
+        button.setIcon(QIcon('logo.png'))
+        """
 
         # Scaling buttons
         self.button_container = QWidget()
