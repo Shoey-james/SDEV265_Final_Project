@@ -6,9 +6,6 @@ from PyQt6.QtCore import Qt, QSize
 import sqlite3
 from collections import defaultdict
 
-# if conversion functions get settled, this will be next
-# TODO: change everything over to add recipe display page. will be able to manage recipe db from this page 
-# (add/remove recipes,favorite/unfavorite them, access portion calculator possibly from here)
 class RecipesWindow(QMainWindow):  
     def __init__(self, controller, rec_id):
         super().__init__()
