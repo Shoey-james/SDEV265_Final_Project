@@ -199,5 +199,17 @@ class Controller:
         }
     """)
     
-    def favbtn_pressed(self, fav_btn):
+    def favbtn_pressed(self, fav_btn, rec_id):
         print("Favorites button pressed")
+
+    def quick_select_favorite(self, rec_id):
+        conn = sqlite3.connect('db_tables/tables.db')
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT 1 FROM favorites_table WHERE username = ? AND rec_id = ?",
+            (self.username, rec_id)
+        )
+        result = cursor.fetchone()
+        conn.close()
+        return True is not None
+

@@ -283,5 +283,5 @@ class ClickableWidget(QWidget):
 
 
     def mousePressEvent(self, event):
-        print("Recipe ID being clicked: ", self.rec_id)
+        print("Recipe ID being clicked: ", self.rec_id,)
         self.controller.recipes_pressed(self.rec_id)

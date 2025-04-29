@@ -59,9 +59,15 @@ class RecipesWindow(QMainWindow):
         self.name_label.setObjectName("recFullViewName")
         title_layout.addWidget(self.name_label)
                 # Favorite button
-        self.favbtn = QPushButton("favorite")
+        self.favbtn = QPushButton("") # Keep this empty JAMES LOL
         self.favbtn.setObjectName("favoriteButton")
-        star = QPixmap("images/star_outline.png")
+        is_favorited = self.controller.quick_select_favorite(rec_id)
+
+        if is_favorited:
+            star = QPixmap("images/star_filled.png")
+        else:
+            star = QPixmap("images/star_outline.png")
+        print(star.isNull())  # Will print True if image failed to load
         width = 20
         height = 20
         resized_star = star.scaled(width, height, Qt.AspectRatioMode.KeepAspectRatio)
@@ -70,9 +76,8 @@ class RecipesWindow(QMainWindow):
         self.favbtn.setIconSize(QSize(20, 20)) 
         self.favbtn.setFixedSize(30, 30)
         self.favbtn.setFlat(True)
-        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, self.favorite_button))
+        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, rec_id))
         title_layout.addWidget(self.favbtn)
-        title_layout.addStretch()
         layout.addWidget(self.title_container)
 
         if image:
@@ -150,6 +155,8 @@ class RecipesWindow(QMainWindow):
             })
 
         return grouped
+    
+
 
         
     def center_window(self, width, height):
