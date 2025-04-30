@@ -56,13 +56,22 @@ class RecipesWindow(QMainWindow):
         self.name_label = QLabel(name)
         self.name_label.setObjectName("recFullViewName")
         title_layout.addWidget(self.name_label)
-                # Favorite button
-        self.favbtn = QPushButton("") # Keep this empty JAMES LOL
+# Favorite button
+        self.favbtn = QPushButton("") # Keep this empty JAMES LOL 
         self.favbtn.setObjectName("favoriteButton")
         is_favorited = self.controller.quick_select_favorite(rec_id)
 
         if is_favorited:
             star = QPixmap("images/star_filled.png")
+            
+        # TODO: apply these to favorite button after making it have an action. add to fav(click): insert statement   remove from fav (unclick): delete statement 
+
+            #INSERT INTO favorites_table (username, rec_id)
+            #VALUES ('some_username', 'some_recipe_id');
+            #-----------
+            #DELETE FROM favorites_table
+            #WHERE username = 'some_username' AND rec_id = 'some_recipe_id';
+        
         else:
             star = QPixmap("images/star_outline.png")
         print(star.isNull())  # Will print True if image failed to load
