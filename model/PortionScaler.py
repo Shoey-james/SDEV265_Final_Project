@@ -13,9 +13,10 @@ class PortionScaler:
 
     def scale_ingredient(self):
         self.scaled_value = self.original_value * self.scale_factor
+        print(f"Scaling: {self.original_value} * {self.scale_factor} = {self.scaled_value}")
         return self.scaled_value
 
-    def get_equivalents(self) -> str:
+    def get_equivalents(self) -> tuple[float, str, float | None, str | None]:
         # Find the matching unit object from either weight or volume groups
         all_units = UnitsRegistry.volume_group + UnitsRegistry.weight_group
         # Find the unit by iterating from both groups
@@ -25,7 +26,7 @@ class PortionScaler:
         )
         # If unit is not found
         if not from_unit:
-            return f"{self.scaled_value} {self.original_unit}"
+            return self.scaled_value, self.original_unit, None, None
         print("From unit type:", type(from_unit))
         # Assign unit group based on type
         if isinstance(from_unit, Volume):
@@ -36,17 +37,15 @@ class PortionScaler:
         # Find out if there is an equivalent from the unit group
         equivalent = self.is_equal(from_unit)
 
-        
-        original_unit_value = f"{self.scaled_value} {self.original_unit}"
-
         # Return both the equivalent and original if available
         if equivalent:
-            return f"{original_unit_value} (or {equivalent})"
+            converted_value, converted_unit = equivalent
+            return self.scaled_value, self.original_unit, converted_value, converted_unit
         # There wasn't an equivalent so return the original unit and its value
         else:
-            return original_unit_value
+            return self.scaled_value, self.original_unit, None, None
         
-    def is_equal(self, from_unit) -> str | None:
+    def is_equal(self, from_unit) -> tuple[float, str] | None:
         base_value = from_unit.to_base(self.scaled_value)
         print("Base Value: ", base_value)
 
@@ -58,6 +57,6 @@ class PortionScaler:
             print("Converted to", unit.unit_name, "=", converted)
 
             if unit.base_size > from_unit.base_size and converted >= 0.125:
-                return f"{round(converted, 2)} {unit.unit_name}"
+                return  converted, unit.unit_name
 
         return None

@@ -19,7 +19,8 @@ class Units:
         return target_unit, base_value
 
     """ Converts a string fraction from UI or input to a float value for conversions. """
-    def to_decimal(self, value:str) -> float:
+    @staticmethod
+    def to_decimal(value:str) -> float:
         value = value.strip() # Removes whitespace
 
         # If the fraction is a mixed fraction..
@@ -32,7 +33,8 @@ class Units:
         return round(result, 2) # Rounds to two decimal places because some fractions will continue on forever.
 
     """ Converts the float value to a fraction for readability for the user."""   
-    def to_fraction(self, value: float):
+    @staticmethod
+    def to_fraction(value: float):
         # Get the value and use the built in Fraction class to convert from float to fraction
         fraction = Fraction(value).limit_denominator(8) # Limits the denominators that can be outputted to a max of 8
         # Get the whole number from the fraction by dividing the numerator from the denominator

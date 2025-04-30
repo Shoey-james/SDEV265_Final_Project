@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton, QHBoxLayout, 
+    QApplication, QMainWindow,  QWidget, QLabel, QScrollArea, QVBoxLayout, QTextEdit, QPushButton, QHBoxLayout, QButtonGroup
 )
 from PyQt6.QtGui import QPixmap, QIcon
 from PyQt6.QtCore import Qt, QSize
@@ -11,6 +11,7 @@ class RecipesWindow(QMainWindow):
         super().__init__()
         self.controller = controller
         self.rec_id = rec_id
+        self.ingredient_labels = {}
         self.setWindowTitle("RecipeSave || Full Recipe View")
         self.resize(800, 700)
         self.center_window(800, 700)
@@ -85,36 +86,23 @@ class RecipesWindow(QMainWindow):
         layout.addWidget(self.img_label)
         
 
-        """
-        # adding action to a button
-        button.clicked.connect(self.clickme)
-
-        # setting icon to the button
-        button.setIcon(QIcon('logo.png'))
-        """
-
         # Scaling buttons
         self.button_container = QWidget()
         self.button_container.setObjectName("scalingButtonContainer")
         button_layout = QHBoxLayout()
         self.button_container.setLayout(button_layout)
+        self.scaling_buttons = QButtonGroup()
         self.onex = QPushButton("1x")
-        self.onex.setObjectName("scalingButtons")
-        self.onex.clicked.connect(lambda: self.controller.scaling_pressed(self.onex, self.scaling_buttons))
         self.twox = QPushButton("2x")
-        self.twox.setObjectName("scalingButtons")
-        self.twox.clicked.connect(lambda: self.controller.scaling_pressed(self.twox, self.scaling_buttons))
         self.threex = QPushButton("3x")
-        self.threex.setObjectName("scalingButtons")
-        self.threex.clicked.connect(lambda: self.controller.scaling_pressed(self.threex, self.scaling_buttons))
         self.fourx = QPushButton("4x")
-        self.fourx.setObjectName("scalingButtons")
-        self.fourx.clicked.connect(lambda: self.controller.scaling_pressed(self.fourx, self.scaling_buttons))
-        self.scaling_buttons = [self.onex, self.twox, self.threex, self.fourx]
-        button_layout.addWidget(self.onex)
-        button_layout.addWidget(self.twox)
-        button_layout.addWidget(self.threex)
-        button_layout.addWidget(self.fourx)
+
+        for i, sc_btn in enumerate([self.onex, self.twox, self.threex, self.fourx]):
+            sc_btn.setObjectName("scalingButtons")
+            self.scaling_buttons.addButton(sc_btn, i+1)
+            button_layout.addWidget(sc_btn)
+
+        self.scaling_buttons.buttonClicked.connect(lambda button: self.controller.scaling_pressed(button, self.scaling_buttons, self.rec_id))
 
         layout.addWidget(self.button_container)
 
@@ -128,6 +116,7 @@ class RecipesWindow(QMainWindow):
             for ingredient in ing_list:
                 self.ing_label = QLabel(f"{ingredient['quantity']} {ingredient['unit']} {ingredient['name']}")
                 self.ing_label.setObjectName("ingredient")
+                self.ingredient_labels[ingredient['ing_id']] = self.ing_label
                 layout.addWidget(self.ing_label)
 
         # Create widget for directions

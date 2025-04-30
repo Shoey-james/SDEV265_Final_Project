@@ -3,6 +3,8 @@ from view.HomePage import HomePage, SearchPopupWindow
 from view.RecipesWIndow import RecipesWindow
 from view.LoginWindow import LoginWindow
 from view.CreateAccountDisplay import CreateAccountDisplay
+from model.PortionScaler import PortionScaler
+from model.Units import Units
 import sqlite3
 from PyQt6.QtWidgets import QMessageBox
 
@@ -165,11 +167,12 @@ class Controller:
             print("Database Error", f"An error occurred: {e}")
             return None
 
-    def scaling_pressed(self, clicked_button, scaling_buttons):
-        print(clicked_button, "pressed.")
+    def scaling_pressed(self, button, scaling_buttons, curr_rec):
+        button_id = scaling_buttons.id(button)
+        print(f"Button Pressed:{button.text()}, ID: {button_id}")
         # First, reset all scaling buttons
-        for button in scaling_buttons:
-            button.setStyleSheet("""
+        for btn in scaling_buttons.buttons():
+            btn.setStyleSheet("""
                 QPushButton#scalingButtons {
                     color: white;
                     min-width: 40px;
@@ -191,13 +194,53 @@ class Controller:
                 }
             """)
 
-        clicked_button.setStyleSheet(button.styleSheet() + """
+        button.setStyleSheet(button.styleSheet() + """
         QPushButton#scalingButtons {
             background-color: #a84300;
             border: 3px double white;
             padding: 2px 6px;
         }
     """)
+        self.scale_rec_ingredients(curr_rec, button_id)
+    
+    def scale_rec_ingredients(self, curr_rec, button_id):
+        print("Scaling ingredients initiated")
+        conn = sqlite3.connect('db_tables/tables.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT ing_id, ing_name, ing_quant, ing_unit FROM ingredients_table WHERE rec_id = ?", (curr_rec,))
+        rows = cursor.fetchall()
+        conn.close()
+
+        for ing_id, ing_name, ing_quant, ing_unit in rows:
+            try:
+                dec_original_value = Units.to_decimal(ing_quant)
+            except:
+                print(f"Could not parse: {ing_quant}")
+                continue
+            scaler = PortionScaler(
+                original_unit = ing_unit,
+                original_value = dec_original_value,
+                scale_factor = button_id
+            )
+            scaled_value = scaler.scale_ingredient()
+            print(f"Scaled value (after scale_ingredient): {scaled_value}")
+            scaled_value, original_unit, equiv_value, equiv_unit = scaler.get_equivalents()
+            
+            fraction_scaled_value = Units.to_fraction(scaled_value)
+            if equiv_value:
+                fraction_equiv_value = Units.to_fraction(equiv_value)
+                scaled_text = f"{fraction_scaled_value} {original_unit} (or {fraction_equiv_value} {equiv_unit})"
+            else:
+                scaled_text = f"{fraction_scaled_value} {original_unit}"
+
+            scaled_text += f" {ing_name}"
+            print("Suggested equivalent:", scaled_text)
+            if scaled_value is None:
+                continue
+            if hasattr(self, "full_recipe_view"):
+                label = self.full_recipe_view.ingredient_labels.get(ing_id)
+                if label:
+                    label.setText(scaled_text)
     
     def favbtn_pressed(self, fav_btn, rec_id):
         print("Favorites button pressed")
