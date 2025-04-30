@@ -108,6 +108,10 @@ class RecipesWindow(QMainWindow):
 
         layout.addWidget(self.button_container)
 
+        self.ing_title = QLabel("Ingredients")
+        self.ing_title.setObjectName("ingredientsTitle")
+        layout.addWidget(self.ing_title)
+
         #Group Ingredients
         grouped = self.group_by_comp(ingredients)
         for component, ing_list in grouped.items():

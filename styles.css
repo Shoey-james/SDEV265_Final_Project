@@ -204,9 +204,17 @@ QLabel#component {
     font-size: 20px;
     font-weight: 600;
     color: #ffbb55;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-bottom: 5px;
     background-color: transparent;
+}
+#ingredientsTitle {
+    background-color: transparent;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffbb55;
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 
 QLabel#ingredient {
