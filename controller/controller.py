@@ -6,6 +6,9 @@ from view.CreateAccountDisplay import CreateAccountDisplay
 from model.PortionScaler import PortionScaler
 from model.Units import Units
 import sqlite3
+from PyQt6.QtGui import QPixmap, QIcon
+from PyQt6.QtCore import Qt
+
 from PyQt6.QtWidgets import QMessageBox
 
 
@@ -242,8 +245,44 @@ class Controller:
                 if label:
                     label.setText(scaled_text)
     
-    def favbtn_pressed(self, fav_btn, rec_id):
-        print("Favorites button pressed")
+    def favbtn_pressed(self, rec_id):
+        print("fav button pressed")
+        is_favorited = self.quick_select_favorite(rec_id)
+
+        if is_favorited:       # Unfavorite --> delete from favorites_table
+            self.delete_favorite(username, rec_id)
+
+        else:       # Favorite --> insert into favorites_table
+            self.insert_favorite(username, rec_id)
+            
+    
+    def insert_favorite(self, username, rec_id):
+        print("insert favorite function accessed")
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                "INSERT INTO favorites_table (username, rec_id) VALUES (?, ?);",
+                (username, rec_id)
+            )
+            self.conn.commit()
+        except sqlite3.IntegrityError as e:
+            print(f"Insert failed: {e}")  # For example, if the favorite already exists
+        finally:
+            cursor.close()
+
+    def delete_favorite(self, username, rec_id):
+        print(" delete favorite function accessed")
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                "DELETE FROM favorites_table WHERE username = ? AND rec_id = ?;",
+                (username, rec_id)
+            )
+            self.conn.commit()
+        finally:
+            cursor.close()
+
+
 
     def quick_select_favorite(self, rec_id):
         print("Quick_select_favorites: Current User: ", self.username)
