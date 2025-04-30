@@ -183,6 +183,9 @@ class HomePage(QMainWindow):
     def all_rec_display(self, all_info):
         self.all_popup_window = SearchPopupWindow(all_info, self.controller)
         self.all_popup_window.show()
+    
+    def update_home(self):
+        self.favorites_container.update()
             
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()

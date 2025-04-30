@@ -20,12 +20,12 @@ class RecipesWindow(QMainWindow):
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         # Set up the vertical flow of data
-        container = QWidget()
-        container.setObjectName("fullRecipe")
+        self.container = QWidget()
+        self.container.setObjectName("fullRecipe")
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        container.setLayout(layout)
-        scroll_area.setWidget(container)
+        self.container.setLayout(layout)
+        scroll_area.setWidget(self.container)
         self.setCentralWidget(scroll_area)
 
         # Get the recipe info
@@ -76,7 +76,7 @@ class RecipesWindow(QMainWindow):
         self.favbtn.setIconSize(QSize(20, 20)) 
         self.favbtn.setFixedSize(30, 30)
         self.favbtn.setFlat(True)
-        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, rec_id))
+        self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(rec_id))
         title_layout.addWidget(self.favbtn)
         layout.addWidget(self.title_container)
 
@@ -148,7 +148,8 @@ class RecipesWindow(QMainWindow):
 
         return grouped
     
-
+    def update_rec_window(self):
+        self.container.update()
 
         
     def center_window(self, width, height):

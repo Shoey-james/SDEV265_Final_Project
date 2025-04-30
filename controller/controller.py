@@ -250,37 +250,46 @@ class Controller:
         is_favorited = self.quick_select_favorite(rec_id)
 
         if is_favorited:       # Unfavorite --> delete from favorites_table
-            self.delete_favorite(username, rec_id)
+            self.delete_favorite(rec_id)
 
-        else:       # Favorite --> insert into favorites_table
-            self.insert_favorite(username, rec_id)
+        elif is_favorited == None:       # Favorite --> insert into favorites_table
+            self.insert_favorite(rec_id)
             
     
-    def insert_favorite(self, username, rec_id):
+    def insert_favorite(self, rec_id):
         print("insert favorite function accessed")
         try:
-            cursor = self.conn.cursor()
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
             cursor.execute(
                 "INSERT INTO favorites_table (username, rec_id) VALUES (?, ?);",
-                (username, rec_id)
+                (self.username, rec_id,)
             )
-            self.conn.commit()
+            conn.commit()
+            cursor.close()
         except sqlite3.IntegrityError as e:
             print(f"Insert failed: {e}")  # For example, if the favorite already exists
-        finally:
-            cursor.close()
+        
+        HomePage.update_home(self)
+        RecipesWindow.update_rec_window(self)
 
-    def delete_favorite(self, username, rec_id):
+    def delete_favorite(self, rec_id):
         print(" delete favorite function accessed")
         try:
-            cursor = self.conn.cursor()
+            conn = sqlite3.connect('db_tables/tables.db')
+            cursor = conn.cursor()
             cursor.execute(
                 "DELETE FROM favorites_table WHERE username = ? AND rec_id = ?;",
-                (username, rec_id)
+                (self.username, rec_id,)
             )
-            self.conn.commit()
-        finally:
+            conn.commit()
             cursor.close()
+        except sqlite3.Error as e:
+            print("Database Error", f"An error occurred: {e}")
+            return None
+
+        HomePage.update_home(self)
+        RecipesWindow.update_rec_window(self)
 
 
 
