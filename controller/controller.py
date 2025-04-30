@@ -203,6 +203,8 @@ class Controller:
         print("Favorites button pressed")
 
     def quick_select_favorite(self, rec_id):
+        print("Quick_select_favorites: Current User: ", self.username)
+        print("Quick_select_favorites: rec_id: ", rec_id)
         conn = sqlite3.connect('db_tables/tables.db')
         cursor = conn.cursor()
         cursor.execute(
@@ -211,5 +213,5 @@ class Controller:
         )
         result = cursor.fetchone()
         conn.close()
-        return True is not None
+        return True if result else None
 
