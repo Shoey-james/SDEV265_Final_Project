@@ -48,7 +48,7 @@ class RecipesWindow(QMainWindow):
         ingredients = cursor.fetchall()
         conn.close()
 
-        # Create widgets to display recipe
+# Create widgets to display recipe
         self.title_container = QWidget()
         self.title_container.setObjectName("titleContainer")
         title_layout = QHBoxLayout()
@@ -64,14 +64,6 @@ class RecipesWindow(QMainWindow):
         if is_favorited:
             star = QPixmap("images/star_filled.png")
             
-        # TODO: apply these to favorite button after making it have an action. add to fav(click): insert statement   remove from fav (unclick): delete statement 
-
-            #INSERT INTO favorites_table (username, rec_id)
-            #VALUES ('some_username', 'some_recipe_id');
-            #-----------
-            #DELETE FROM favorites_table
-            #WHERE username = 'some_username' AND rec_id = 'some_recipe_id';
-        
         else:
             star = QPixmap("images/star_outline.png")
         print(star.isNull())  # Will print True if image failed to load
@@ -84,6 +76,13 @@ class RecipesWindow(QMainWindow):
         self.favbtn.setFixedSize(30, 30)
         self.favbtn.setFlat(True)
         self.favbtn.clicked.connect(lambda: self.controller.favbtn_pressed(self.favbtn, rec_id))
+        # TODO: apply these to favorite button after making it have an action. add to fav(click): insert statement   remove from fav (unclick): delete statement 
+
+            #INSERT INTO favorites_table (username, rec_id)
+            #VALUES ('some_username', 'some_recipe_id');
+            #-----------
+            #DELETE FROM favorites_table
+            #WHERE username = 'some_username' AND rec_id = 'some_recipe_id';
         title_layout.addWidget(self.favbtn)
         layout.addWidget(self.title_container)
 
