@@ -185,7 +185,9 @@ class HomePage(QMainWindow):
         self.all_popup_window.show()
     
     def update_home(self):
-        self.favorites_container.update()
+        self.favorites_list.clear()  # Remove all current items
+        self.load_favorites_table()  # Reload from DB
+
             
     def center_window(self, width, height):
         screen = QApplication.primaryScreen().availableGeometry()

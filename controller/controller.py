@@ -270,8 +270,9 @@ class Controller:
         except sqlite3.IntegrityError as e:
             print(f"Insert failed: {e}")  # For example, if the favorite already exists
         
-        HomePage.update_home(self)
-        RecipesWindow.update_rec_window(self)
+        
+        self.home.update_home()
+        self.full_recipe_view.update_rec_window()
 
     def delete_favorite(self, rec_id):
         print(" delete favorite function accessed")
@@ -288,8 +289,9 @@ class Controller:
             print("Database Error", f"An error occurred: {e}")
             return None
 
-        HomePage.update_home(self)
-        RecipesWindow.update_rec_window(self)
+        
+        self.home.update_home()
+        self.full_recipe_view.update_rec_window()
 
 
 

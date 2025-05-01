@@ -149,7 +149,19 @@ class RecipesWindow(QMainWindow):
         return grouped
     
     def update_rec_window(self):
-        self.container.update()
+        is_favorited = self.controller.quick_select_favorite(self.rec_id)
+
+        if is_favorited:
+            star = QPixmap("images/star_filled.png")
+        else:
+            star = QPixmap("images/star_outline.png")
+
+        if star.isNull():
+            print("Error: star image failed to load.")
+            return
+
+        resized_star = star.scaled(20, 20, Qt.AspectRatioMode.KeepAspectRatio)
+        self.favbtn.setIcon(QIcon(resized_star))
 
         
     def center_window(self, width, height):
