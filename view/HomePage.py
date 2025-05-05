@@ -57,7 +57,7 @@ class HomePage(QMainWindow):
         self.favorites_container.setFixedSize(350, 500)
         favorites_layout = QHBoxLayout()
         self.favorites_container.setLayout(favorites_layout)
-# Widget for favorite container to display favorites_table db info TODO: finish favorites_table, test functionality of favorites display after
+# Widget for favorite container to display favorites_table db info
         self.favorites_list = QListWidget() # list widget for displaying favorites
         self.favorites_list.setObjectName("favoritesList")
         favorites_layout.addWidget(self.favorites_list)
@@ -107,7 +107,7 @@ class HomePage(QMainWindow):
     def load_favorites_table(self):
         try:
             print(self.username)
-            # Connect to your SQLite database
+            # Connect to SQLite database
             conn = sqlite3.connect('db_tables/tables.db')
             cursor = conn.cursor()
 
@@ -195,25 +195,6 @@ class HomePage(QMainWindow):
         y = (screen.height() - height) // 2
         self.move(x, y)
         
-        
-
-
-
-
-        """
-        # scrollbar code from kayla's last project, should be able to reuse the code
-        
-        
-        scroll_area = QScrollArea()  # Initialize scroll area
-        scroll_area.setWidgetResizable(True)  # Allow dynamic resizing
-        event_container = QWidget()  # Create container widget for events
-        self.event_layout = QVBoxLayout()  # Create vertical layout for events
-        event_container.setLayout(self.event_layout)  # Set event layout as container's layout
-        scroll_area.setWidget(event_container)  # Assign container to scroll area
-        self.main_layout.addWidget(scroll_area)  # Add scroll area to main layout
-        
-        """
-
 class SearchPopupWindow(QWidget):
     def __init__(self, results, controller):
         super().__init__()

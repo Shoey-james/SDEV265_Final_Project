@@ -101,9 +101,7 @@ class Controller:
 
     def reg_submit_clicked(self, username_input, password_input, fname_input, lname_input, email_input):
         print("Registration form submit button pressed")
-        # Assuming this code goes into a method of your PyQt app:
-
-        # These are the inputs you want to validate
+        # inputs to validate
         self.username = username_input.text()
         self.password = password_input.text()
         self.fname = fname_input.text()
