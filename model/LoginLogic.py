@@ -46,7 +46,11 @@ class CreateAccount:
         """
         print("validate_input initiated")
         if not all([username, password, fname, lname, email]):
-            print("All fields are required!")
+            error_box = QMessageBox()
+            error_box.setIcon(QMessageBox.Icon.Warning)
+            error_box.setWindowTitle("Account Creation Failed") # It is a database error but user doesn't need to see that.
+            error_box.setText("All fields are required.")
+            error_box.exec()
             return False
         
         # Username validation: must be at least 4 characters long (up to 12), have at least 1 letter/1 digit, and no special characters
@@ -87,7 +91,11 @@ class CreateAccount:
             # Check for existing username and/or email
             cursor.execute("SELECT * FROM user_table WHERE username = ? OR email = ?", (username, email))
             if cursor.fetchone():
-                print("Username, or email already exists!")
+                error_box = QMessageBox()
+                error_box.setIcon(QMessageBox.Icon.Warning)
+                error_box.setWindowTitle("Account Creation Failed") # It is a database error but user doesn't need to see that.
+                error_box.setText("An account with this username may already exist.")
+                error_box.exec()
                 conn.close()
                 return False
 
